@@ -5,15 +5,18 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 <!-- ============================================================
-     BEFORE GOING LIVE — fill these in (find & replace in this file):
-       1. G-1SQVER0811XX          -> your GA4 Measurement ID (appears 2x)
-       2. xlgyeqkq          -> your Formspree form ID
-       3. EDIT_your_email       -> booking email  e.g. vince@vatodj.com
-       4. EDIT_your_phone       -> your number in format +13045551234
-       5. https://djvato.com     -> your domain e.g. https://vatodj.com
-       6. EDIT_share_image_url  -> 1200x630 social share image (optional)
-       7. EDIT_google_review    -> Google review link (once profile is live)
-     FILES TO UPLOAD TO REPO ROOT: logo.png (white transparent version)
+     STILL TO DO BEFORE / RIGHT AFTER LAUNCH:
+       1. G-1SQVER0811XX  -> replace with your real GA4 Measurement ID (appears 2x),
+                             OR delete the two analytics <script> blocks below if not using GA yet.
+                             (Current value still looks like a placeholder.)
+       2. xlgyeqkq        -> confirm this is your real Formspree form ID, then send a
+                             test inquiry to verify it lands in your inbox.
+       3. share.jpg       -> create a 1200x630 social share image (logo over a strong
+                             nightlife shot) and upload it to the repo root. og:image is
+                             already wired to https://djvato.com/share.jpg.
+       4. EDIT_google_review -> Google review link (once Business Profile is verified).
+       5. vince@djvato.com   -> set up this mailbox (or alias to your inbox). Already wired.
+     FILES IN REPO ROOT: logo.png, gallery-*.jpg, about.jpg, share.jpg
      ============================================================ -->
 
 <title>VATO — Open-Format DJ in Morgantown, WV | Clubs, College, Greek Life & Private Events</title>
@@ -26,8 +29,8 @@
 <meta property="og:title" content="VATO — Open-Format DJ | Morgantown, WV" />
 <meta property="og:description" content="Resident DJ at Ivy Nightclub. Clubs, college, Greek life, private events — weddings by request." />
 <meta property="og:type" content="website" />
-<meta property="og:url" content="https://djvato.com " />
-<meta property="og:image" content="EDIT_share_image_url" />
+<meta property="og:url" content="https://djvato.com" />
+<meta property="og:image" content="https://djvato.com/share.jpg" />
 <meta name="twitter:card" content="summary_large_image" />
 
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-1SQVER0811XX"></script>
@@ -46,8 +49,8 @@
   "name": "VATO",
   "alternateName": "VATO DJ",
   "description": "Open-format DJ in Morgantown, WV. Live mixing for bars, clubs, college and Greek life events, and private parties. Weddings and corporate events by request.",
-  "url": "https://djvato.com ",
-  "image": "EDIT_share_image_url",
+  "url": "https://djvato.com",
+  "image": "https://djvato.com/share.jpg",
   "founder": { "@type": "Person", "name": "Vince Widerman" },
   "address": { "@type": "PostalAddress", "addressLocality": "Morgantown", "addressRegion": "WV", "addressCountry": "US" },
   "areaServed": [
@@ -142,7 +145,14 @@
   .gallery{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
   .shot{aspect-ratio:4/3;background:var(--ink-3);border:1px solid var(--line);border-radius:4px;overflow:hidden;display:flex;align-items:flex-end;position:relative;background-image:linear-gradient(135deg,#1b1825,#221d30)}
   .shot img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:4px}
-  .shot .cat{position:relative;z-index:1;font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);font-weight:600;padding:14px 16px;text-shadow:0 1px 4px rgba(0,0,0,.8)}
+  .shot::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(to top,rgba(8,7,11,.80),transparent 52%);opacity:1;transition:opacity .25s ease;pointer-events:none}
+  .shot .cat{position:relative;z-index:2;font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);font-weight:600;padding:14px 16px;text-shadow:0 1px 4px rgba(0,0,0,.8);transition:opacity .25s ease,transform .25s ease}
+  @media(hover:hover){
+    .shot::before{opacity:0}
+    .shot .cat{opacity:0;transform:translateY(8px)}
+    .shot:hover::before{opacity:1}
+    .shot:hover .cat{opacity:1;transform:none}
+  }
 
   .about{display:grid;grid-template-columns:1fr 1.05fr;gap:56px;align-items:center}
   .about .photo{aspect-ratio:4/5;background:var(--ink-3);border:1px solid var(--line);border-radius:4px;overflow:hidden;background-image:linear-gradient(135deg,#1b1825,#221d30)}
@@ -275,12 +285,12 @@
   <div class="wrap">
     <span class="eyebrow violet">Resident DJ &amp; Assistant Entertainment Manager · Ivy Nightclub · Morgantown, WV</span>
     <h1><span class="accent">Live mixing</span> for clubs, college, and private events.</h1>
-    <p class="hero-sub">Open-format, read off the crowd and mixed in real time — never a pre-set playlist. Professional JBL sound for any room, from a packed club to a private party. Weddings and formal events by request.</p>
+    <p class="hero-sub">Live, open-format mixing built around the room — clubs, college events, and private parties. Professional JBL sound. Weddings and formal events by request.</p>
     <div class="hero-actions">
       <a href="#contact" class="btn btn-primary">Check availability</a>
       <a href="#packages" class="btn btn-ghost">View packages</a>
     </div>
-    <p class="hero-meta">Available across <b>North Central WV</b> and for select regional travel.</p>
+    <p class="hero-meta">Available across <b>North Central WV</b> — select regional and out-of-state events by request.</p>
     <div class="eq" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
   </div>
 </section>
@@ -314,8 +324,8 @@
   <div class="wrap">
     <div class="sec-head">
       <span class="eyebrow violet">What I do</span>
-      <h2>Most DJs can run a timeline or mix a party. Not both.</h2>
-      <p>Club DJs who can't handle a real event. Event DJs who can't actually mix. VATO sits in the middle — nightlife-level mixing with the prep and professionalism a paid booking demands.</p>
+      <h2>Live mixing, built for the room.</h2>
+      <p>I mix live in front of nightlife crowds every week — reading the floor, not running a playlist. That instinct is what I bring to college events, Greek life, and private parties, backed by professional sound and a planned timeline so the energy holds and the night runs on time.</p>
     </div>
     <div class="cards">
       <div class="card">
@@ -369,9 +379,9 @@
     -->
     <div class="gallery">
       <a class="shot"><img src="gallery-nightlife.jpg" alt="VATO DJing a packed nightlife crowd with stage lighting" /><span class="cat">Nightlife</span></a>
-      <a class="shot"><img src="gallery-decks.jpg" alt="VATO live behind the decks with the VATO LED wall" /><span class="cat">Behind the Decks</span></a>
+      <a class="shot"><img src="gallery-decks.jpg" alt="VATO mixing live behind the decks at Ivy Nightclub, Morgantown WV" /><span class="cat">Behind the Decks</span></a>
       <a class="shot"><img src="gallery-college.jpg" alt="VATO performing for a packed college and Greek life crowd" /><span class="cat">College &amp; Greek</span></a>
-      <a class="shot"><img src="gallery-setup.jpg" alt="VATO professional JBL sound system setup" /><span class="cat">Setup &amp; Sound</span></a>
+      <a class="shot"><img src="gallery-setup.jpg" alt="VATO professional JBL sound system setup" /><span class="cat">Setup</span></a>
     </div>
   </div>
 </section>
@@ -605,13 +615,15 @@
         <h2>Check availability.</h2>
         <p>Tell me about your event and you'll hear back with availability and a quote. Weekend dates book early — reach out sooner rather than later.</p>
         <div class="contact-direct">
-          <a href="mailto:vincewiderman@gmail.com"><span><span class="lbl">Email</span>Send an email</span></a>
+          <a href="mailto:vince@djvato.com"><span><span class="lbl">Email</span>Send an email</span></a>
           <a href="sms:+13362794506"><span><span class="lbl">Text</span>Send a text</span></a>
           <a href="https://instagram.com/vince_w29" target="_blank" rel="noopener"><span><span class="lbl">Instagram</span>@vince_w29</span></a>
         </div>
       </div>
 
       <form action="https://formspree.io/f/xlgyeqkq" method="POST">
+        <input type="hidden" name="_subject" value="New VATO booking inquiry" />
+        <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" style="display:none" aria-hidden="true" />
         <p class="form-microcopy">The more details you include, the more accurate your quote will be.</p>
         <div class="row2">
           <div class="field"><label for="fname">Name</label><input id="fname" type="text" name="name" required /></div>
@@ -654,7 +666,7 @@
           </div>
         </div>
         <div class="field"><label for="fmsg">Event details</label><textarea id="fmsg" name="message" placeholder="Tell me about the event, the crowd, and what you're looking for…"></textarea></div>
-        <button class="btn btn-primary" type="submit">Send inquiry</button>
+        <button class="btn btn-primary" type="submit">Check my date</button>
       </form>
     </div>
   </div>
