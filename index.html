@@ -5,18 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 <!-- ============================================================
-     STILL TO DO BEFORE / RIGHT AFTER LAUNCH:
-       1. G-1SQVER0811XX  -> replace with your real GA4 Measurement ID (appears 2x),
-                             OR delete the two analytics <script> blocks below if not using GA yet.
-                             (Current value still looks like a placeholder.)
-       2. xlgyeqkq        -> confirm this is your real Formspree form ID, then send a
-                             test inquiry to verify it lands in your inbox.
-       3. share.jpg       -> create a 1200x630 social share image (logo over a strong
-                             nightlife shot) and upload it to the repo root. og:image is
-                             already wired to https://djvato.com/share.jpg.
-       4. EDIT_google_review -> Google review link (once Business Profile is verified).
-       5. vince@djvato.com   -> set up this mailbox (or alias to your inbox). Already wired.
-     FILES IN REPO ROOT: logo.png, gallery-*.jpg, about.jpg, share.jpg
+     BEFORE GOING LIVE — fill these in (find & replace in this file):
+       1. G-1SQVER0811          -> your GA4 Measurement ID (appears 2x)
+       2. YOUR_FORM_ID          -> your Formspree form ID
+       3. EDIT_your_email       -> booking email  e.g. vince@vatodj.com
+       4. EDIT_your_phone       -> your number in format +13045551234
+       5. https://djvato.com    -> your domain e.g. https://vatodj.com
+       6. EDIT_share_image_url  -> 1200x630 social share image (optional)
+       7. EDIT_google_review    -> Google review link (once profile is live)
+     FILES TO UPLOAD TO REPO ROOT: logo.png (white transparent version)
      ============================================================ -->
 
 <title>VATO — Open-Format DJ in Morgantown, WV | Clubs, College, Greek Life & Private Events</title>
@@ -30,15 +27,15 @@
 <meta property="og:description" content="Resident DJ at Ivy Nightclub. Clubs, college, Greek life, private events — weddings by request." />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://djvato.com" />
-<meta property="og:image" content="https://djvato.com/share.jpg" />
+<meta property="og:image" content="EDIT_share_image_url" />
 <meta name="twitter:card" content="summary_large_image" />
 
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-1SQVER0811XX"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-1SQVER0811"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-  gtag('config', 'G-1SQVER0811XX');
+  gtag('config', 'G-1SQVER0811');
 </script>
 
 <script type="application/ld+json">
@@ -50,7 +47,7 @@
   "alternateName": "VATO DJ",
   "description": "Open-format DJ in Morgantown, WV. Live mixing for bars, clubs, college and Greek life events, and private parties. Weddings and corporate events by request.",
   "url": "https://djvato.com",
-  "image": "https://djvato.com/share.jpg",
+  "image": "EDIT_share_image_url",
   "founder": { "@type": "Person", "name": "Vince Widerman" },
   "address": { "@type": "PostalAddress", "addressLocality": "Morgantown", "addressRegion": "WV", "addressCountry": "US" },
   "areaServed": [
@@ -145,14 +142,7 @@
   .gallery{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
   .shot{aspect-ratio:4/3;background:var(--ink-3);border:1px solid var(--line);border-radius:4px;overflow:hidden;display:flex;align-items:flex-end;position:relative;background-image:linear-gradient(135deg,#1b1825,#221d30)}
   .shot img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:4px}
-  .shot::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(to top,rgba(8,7,11,.80),transparent 52%);opacity:1;transition:opacity .25s ease;pointer-events:none}
-  .shot .cat{position:relative;z-index:2;font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);font-weight:600;padding:14px 16px;text-shadow:0 1px 4px rgba(0,0,0,.8);transition:opacity .25s ease,transform .25s ease}
-  @media(hover:hover){
-    .shot::before{opacity:0}
-    .shot .cat{opacity:0;transform:translateY(8px)}
-    .shot:hover::before{opacity:1}
-    .shot:hover .cat{opacity:1;transform:none}
-  }
+  .shot .cat{position:relative;z-index:1;font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);font-weight:600;padding:14px 16px;text-shadow:0 1px 4px rgba(0,0,0,.8)}
 
   .about{display:grid;grid-template-columns:1fr 1.05fr;gap:56px;align-items:center}
   .about .photo{aspect-ratio:4/5;background:var(--ink-3);border:1px solid var(--line);border-radius:4px;overflow:hidden;background-image:linear-gradient(135deg,#1b1825,#221d30)}
@@ -167,6 +157,23 @@
   .reviews-empty{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:46px 34px;text-align:center;max-width:680px;margin:0 auto}
   .reviews-empty p{color:var(--muted);font-size:1.05rem;margin-bottom:1.6rem}
   .review-cta-row{display:flex;gap:.7rem;justify-content:center;flex-wrap:wrap}
+  .review-intro{max-width:640px;margin:0 auto 2.4rem;text-align:center}
+  .review-intro p{color:var(--muted);font-size:1.05rem}
+  .approved-empty{text-align:center;color:var(--muted);font-size:.98rem;border:1px dashed var(--line-strong);border-radius:4px;padding:34px 26px;max-width:640px;margin:0 auto}
+  .testimonial-form-wrap{max-width:680px;margin:2.6rem auto 0;scroll-margin-top:90px}
+  .testimonial-form-wrap > h3{font-family:var(--display);font-weight:600;font-size:1.3rem;text-align:center;margin-bottom:.5rem}
+  .testimonial-form-wrap > p.tf-sub{color:var(--muted);font-size:.92rem;text-align:center;margin-bottom:1.6rem}
+  .star-input{display:flex;flex-direction:row-reverse;justify-content:center;gap:.35rem}
+  .star-input input{position:absolute;opacity:0;width:0;height:0}
+  .star-input label{font-size:1.7rem;color:var(--ink-3);cursor:pointer;transition:.12s;line-height:1}
+  .star-input label::before{content:"\2605"}
+  .star-input input:checked ~ label,
+  .star-input label:hover,
+  .star-input label:hover ~ label{color:var(--gold)}
+  .star-input input:focus-visible + label{outline:2px solid var(--gold-soft);outline-offset:2px;border-radius:2px}
+  .check-field{display:flex;gap:.7rem;align-items:flex-start;margin-bottom:1rem}
+  .check-field input{margin-top:.25rem;width:18px;height:18px;flex-shrink:0;accent-color:var(--gold)}
+  .check-field label{font-size:.86rem;color:var(--muted);line-height:1.5}
   .reviews{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
   .review{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:28px 26px}
   .review .stars{color:var(--gold);letter-spacing:.12em;margin-bottom:.9rem}
@@ -267,7 +274,7 @@
       <a href="#services">Services</a>
       <a href="#about">About</a>
       <a href="#gallery">Gallery</a>
-      <!-- Uncomment once reviews are live: <a href="#reviews">Reviews</a> -->
+      <a href="#reviews">Reviews</a>
       <a href="#packages">Packages</a>
       <a href="#faq">FAQ</a>
       <a href="#contact" class="btn btn-primary nav-cta">Check availability</a>
@@ -285,12 +292,12 @@
   <div class="wrap">
     <span class="eyebrow violet">Resident DJ &amp; Assistant Entertainment Manager · Ivy Nightclub · Morgantown, WV</span>
     <h1><span class="accent">Live mixing</span> for clubs, college, and private events.</h1>
-    <p class="hero-sub">Live, open-format mixing built around the room — clubs, college events, and private parties. Professional JBL sound. Weddings and formal events by request.</p>
+    <p class="hero-sub">Open-format, read off the crowd and mixed in real time — never a pre-set playlist. Professional JBL sound for any room, from a packed club to a private party. Weddings and formal events by request.</p>
     <div class="hero-actions">
       <a href="#contact" class="btn btn-primary">Check availability</a>
       <a href="#packages" class="btn btn-ghost">View packages</a>
     </div>
-    <p class="hero-meta">Available across <b>North Central WV</b> — select regional and out-of-state events by request.</p>
+    <p class="hero-meta">Available across <b>North Central WV</b> and for select regional travel.</p>
     <div class="eq" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
   </div>
 </section>
@@ -324,8 +331,8 @@
   <div class="wrap">
     <div class="sec-head">
       <span class="eyebrow violet">What I do</span>
-      <h2>Live mixing, built for the room.</h2>
-      <p>I mix live in front of nightlife crowds every week — reading the floor, not running a playlist. That instinct is what I bring to college events, Greek life, and private parties, backed by professional sound and a planned timeline so the energy holds and the night runs on time.</p>
+      <h2>Most DJs can run a timeline or mix a party. Not both.</h2>
+      <p>Club DJs who can't handle a real event. Event DJs who can't actually mix. VATO sits in the middle — nightlife-level mixing with the prep and professionalism a paid booking demands.</p>
     </div>
     <div class="cards">
       <div class="card">
@@ -379,9 +386,9 @@
     -->
     <div class="gallery">
       <a class="shot"><img src="gallery-nightlife.jpg" alt="VATO DJing a packed nightlife crowd with stage lighting" /><span class="cat">Nightlife</span></a>
-      <a class="shot"><img src="gallery-decks.jpg" alt="VATO mixing live behind the decks at Ivy Nightclub, Morgantown WV" /><span class="cat">Behind the Decks</span></a>
+      <a class="shot"><img src="gallery-decks.jpg" alt="VATO live behind the decks with the VATO LED wall" /><span class="cat">Behind the Decks</span></a>
       <a class="shot"><img src="gallery-college.jpg" alt="VATO performing for a packed college and Greek life crowd" /><span class="cat">College &amp; Greek</span></a>
-      <a class="shot"><img src="gallery-setup.jpg" alt="VATO professional JBL sound system setup" /><span class="cat">Setup</span></a>
+      <a class="shot"><img src="gallery-setup.jpg" alt="VATO professional JBL sound system setup" /><span class="cat">Setup &amp; Sound</span></a>
     </div>
   </div>
 </section>
@@ -410,54 +417,96 @@
   <div class="wrap">
     <div class="sec-head" style="text-align:center;margin-left:auto;margin-right:auto">
       <span class="eyebrow">Reviews</span>
-      <h2>What clients say.</h2>
+      <h2>What people are saying.</h2>
+    </div>
+
+    <div class="review-intro">
+      <p>VATO is collecting feedback from nightlife, college, private, and select wedding events. If we've worked together, a few words go a long way. Website testimonials are reviewed before anything is published.</p>
+    </div>
+
+    <div class="review-cta-row">
+      <a href="https://g.page/r/CR0kMmEMyEyyEBM/review" class="btn btn-primary" target="_blank" rel="noopener">Leave a Google Review</a>
+      <a href="#testimonial-form" class="btn btn-ghost">Submit a Website Testimonial</a>
     </div>
 
     <!--
-      PRE-REVIEW STATE — currently visible.
-      No star rating shown here intentionally: displaying stars with no attached
-      reviews reads as an unearned claim and hurts trust.
-      When you have real, permissioned reviews:
-        1. Delete the .reviews-empty block below
-        2. Uncomment the .reviews grid further below
-        3. Add the Reviews link back into the nav
+      APPROVED TESTIMONIALS — manually reviewed before display.
+      When you have 3-6 strong approved reviews, replace the .approved-empty
+      block below with the .reviews grid pattern shown beneath it.
+      Use first name + last initial. Never invent or approximate quotes.
     -->
-    <div class="reviews-empty">
-      <p>Recent events — including a recent wedding — have earned strong, unsolicited feedback from the couple, their families, and guests. Verified reviews are being collected now and will be featured here shortly.</p>
-      <div class="review-cta-row">
-        <a href="#contact" class="btn btn-primary">Check availability</a>
-        <!--
-          Add this button only once your Google profile is verified and live:
-          <a href="EDIT_google_review" class="btn btn-ghost" target="_blank" rel="noopener">Leave a review</a>
-        -->
+    <div style="margin-top:3rem">
+      <div class="approved-empty">Approved testimonials will be added here as reviews are collected.</div>
+
+      <!--
+      <div class="reviews">
+        <div class="review">
+          <div class="stars" aria-hidden="true">★★★★★</div>
+          <p>"Approved review text."</p>
+          <div class="who"><b>Name L.</b> · Wedding, June 2026 · Google</div>
+        </div>
+        <div class="review">
+          <div class="stars" aria-hidden="true">★★★★★</div>
+          <p>"Approved review text."</p>
+          <div class="who"><b>Name L.</b> · Private party · Verified client</div>
+        </div>
+        <div class="review">
+          <div class="stars" aria-hidden="true">★★★★★</div>
+          <p>"Approved review text."</p>
+          <div class="who"><b>Name L.</b> · College event · Verified client</div>
+        </div>
       </div>
+      -->
     </div>
 
-    <!--
-      REVIEW CARD GRID — uncomment and fill once you have real, permissioned reviews.
-      Use first name + last initial. Include event type and source (Google / verified client).
-      Never invent or approximate quotes.
-
-    <div class="reviews">
-      <div class="review">
-        <div class="stars" aria-hidden="true">★★★★★</div>
-        <p>"Quote here."</p>
-        <div class="who"><b>Name L.</b> · Wedding, June 2026 · Google</div>
-      </div>
-      <div class="review">
-        <div class="stars" aria-hidden="true">★★★★★</div>
-        <p>"Quote here."</p>
-        <div class="who"><b>Name L.</b> · Private party · Verified client</div>
-      </div>
-      <div class="review">
-        <div class="stars" aria-hidden="true">★★★★★</div>
-        <p>"Quote here."</p>
-        <div class="who"><b>Name L.</b> · College event · Verified client</div>
-      </div>
+    <!-- WEBSITE TESTIMONIAL FORM — separate from the booking form. Submissions go to Formspree for manual review; nothing posts automatically. -->
+    <div class="testimonial-form-wrap" id="testimonial-form">
+      <h3>Submit a website testimonial</h3>
+      <p class="tf-sub">Reviewed before anything is published. Honest feedback only.</p>
+      <form action="https://formspree.io/f/mqevadpk" method="POST">
+        <input type="hidden" name="_subject" value="New VATO Website Testimonial" />
+        <div class="row2">
+          <div class="field"><label for="rname">Name</label><input id="rname" type="text" name="name" required /></div>
+          <div class="field"><label for="remail">Email</label><input id="remail" type="email" name="email" required /></div>
+        </div>
+        <div class="row2">
+          <div class="field"><label for="retype">Event type</label>
+            <select id="retype" name="event_type" required>
+              <option value="">Select…</option>
+              <option>Bar / club night</option>
+              <option>College / Greek life event</option>
+              <option>Private party</option>
+              <option>Wedding</option>
+              <option>Corporate / formal</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="field"><label for="redate">Event date</label><input id="redate" type="date" name="event_date" /></div>
+        </div>
+        <div class="field">
+          <label>Star rating</label>
+          <div class="star-input" role="radiogroup" aria-label="Star rating">
+            <input type="radio" id="star5" name="rating" value="5" required /><label for="star5" title="5 stars" aria-label="5 stars"></label>
+            <input type="radio" id="star4" name="rating" value="4" /><label for="star4" title="4 stars" aria-label="4 stars"></label>
+            <input type="radio" id="star3" name="rating" value="3" /><label for="star3" title="3 stars" aria-label="3 stars"></label>
+            <input type="radio" id="star2" name="rating" value="2" /><label for="star2" title="2 stars" aria-label="2 stars"></label>
+            <input type="radio" id="star1" name="rating" value="1" /><label for="star1" title="1 star" aria-label="1 star"></label>
+          </div>
+        </div>
+        <div class="field"><label for="rreview">Your review</label><textarea id="rreview" name="testimonial" placeholder="What stood out about working with VATO?" required></textarea></div>
+        <div class="check-field">
+          <input id="rperm" type="checkbox" name="permission" value="yes" required />
+          <label for="rperm">I give VATO permission to display this review on djvato.com, social media, and promotional material.</label>
+        </div>
+        <div class="field"><label for="rprivate">Private feedback</label><textarea id="rprivate" name="private_feedback" placeholder="Anything I could have done better? This stays private."></textarea></div>
+        <button class="btn btn-primary" type="submit">Submit testimonial</button>
+      </form>
     </div>
-    -->
+
+    <p style="text-align:center;color:var(--muted);font-size:.85rem;margin-top:2rem">Nightlife, college events, private parties, and select weddings by request.</p>
   </div>
 </section>
+
 
 <!-- PACKAGES -->
 <section id="packages">
@@ -615,15 +664,14 @@
         <h2>Check availability.</h2>
         <p>Tell me about your event and you'll hear back with availability and a quote. Weekend dates book early — reach out sooner rather than later.</p>
         <div class="contact-direct">
-          <a href="mailto:vince@djvato.com"><span><span class="lbl">Email</span>Send an email</span></a>
+          <a href="mailto:bookings@djvato.com"><span><span class="lbl">Email</span>Send an email</span></a>
           <a href="sms:+13362794506"><span><span class="lbl">Text</span>Send a text</span></a>
           <a href="https://instagram.com/vince_w29" target="_blank" rel="noopener"><span><span class="lbl">Instagram</span>@vince_w29</span></a>
         </div>
       </div>
 
       <form action="https://formspree.io/f/xlgyeqkq" method="POST">
-        <input type="hidden" name="_subject" value="New VATO booking inquiry" />
-        <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" style="display:none" aria-hidden="true" />
+        <input type="hidden" name="_subject" value="New Booking Inquiry — VATO" />
         <p class="form-microcopy">The more details you include, the more accurate your quote will be.</p>
         <div class="row2">
           <div class="field"><label for="fname">Name</label><input id="fname" type="text" name="name" required /></div>
@@ -666,7 +714,7 @@
           </div>
         </div>
         <div class="field"><label for="fmsg">Event details</label><textarea id="fmsg" name="message" placeholder="Tell me about the event, the crowd, and what you're looking for…"></textarea></div>
-        <button class="btn btn-primary" type="submit">Check my date</button>
+        <button class="btn btn-primary" type="submit">Send inquiry</button>
       </form>
     </div>
   </div>
@@ -684,6 +732,7 @@
       <div class="foot-links">
         <a href="#services">Services</a>
         <a href="#gallery">Gallery</a>
+        <a href="#reviews">Reviews</a>
         <a href="#packages">Packages</a>
         <a href="#faq">FAQ</a>
         <a href="#contact">Contact</a>
