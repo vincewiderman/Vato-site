@@ -186,15 +186,15 @@
   @media(min-width:1140px){ #reviewCards { grid-template-columns: repeat(3,1fr); } }
 
   #packages{background:var(--ink-2)}
-  .pkgs{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;align-items:stretch}
+  .pkgs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px;align-items:stretch}
   .pkg{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:30px 24px;display:flex;flex-direction:column}
   .pkg.featured{border-color:var(--violet);box-shadow:0 0 0 1px var(--violet) inset}
   .pkg .tag{font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--violet-soft);font-weight:600;min-height:1.2em}
   .pkg.formal .tag{color:var(--gold)}
   .pkg h3{font-family:var(--display);font-weight:600;font-size:1.3rem;margin:.55rem 0 .3rem}
-  .pkg .price{font-family:var(--display);font-weight:800;font-size:1.25rem;color:var(--paper);margin:.3rem 0}
+  .pkg .price{font-family:var(--display);font-weight:800;font-size:1.15rem;line-height:1.1;color:var(--paper);margin:.3rem 0}
   .pkg .price small{display:block;font-family:var(--body);font-weight:500;font-size:.76rem;color:var(--muted);letter-spacing:.03em;margin-top:.2rem}
-  .pkg ul{list-style:none;margin:1.2rem 0;display:grid;gap:.6rem;flex:1}
+  .pkg ul{list-style:none;margin:1.2rem 0;display:grid;gap:.75rem;flex:1}
   .pkg li{font-size:.9rem;color:var(--muted);display:flex;gap:.55rem;align-items:flex-start}
   .pkg li::before{content:"\2713";color:var(--gold);font-weight:700;flex-shrink:0}
   .pkg .btn{width:100%;justify-content:center}
@@ -241,7 +241,7 @@
   .copy{color:var(--muted);font-size:.82rem;margin-top:1.4rem;line-height:1.7}
 
   @media(max-width:980px){
-    .cards,.pkgs{grid-template-columns:repeat(2,1fr)}
+    .cards,.pkgs{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
   }
   @media(max-width:880px){
     .nav-links{position:fixed;inset:68px 0 auto 0;background:var(--ink-2);flex-direction:column;align-items:flex-start;gap:0;padding:8px 24px 20px;border-bottom:1px solid var(--line);display:none}
@@ -258,7 +258,7 @@
     .row2{grid-template-columns:1fr}
   }
   @media(max-width:560px){
-    .cards,.pkgs,.gallery{grid-template-columns:1fr}
+    .cards,.pkgs,.gallery{grid-template-columns:1fr;gap:16px}
   }
   @media(prefers-reduced-motion:reduce){
     *{animation:none!important;scroll-behavior:auto!important;transition:none!important}
@@ -335,8 +335,8 @@
   <div class="wrap">
     <div class="sec-head">
       <span class="eyebrow violet">What I do</span>
-      <h2>Most DJs can run a timeline or mix a party. Not both.</h2>
-      <p>VATO brings nightlife-level mixing together with the prep and professionalism a paid booking demands — real crowd-reading and seamless transitions, backed by the planning an event actually requires.</p>
+      <h2>Nightlife mixing with event-level prep.</h2>
+      <p>Live sets, clean transitions, reliable sound, and the planning needed to keep the night moving. Built for bars, college events, private parties, and select formal events by request.</p>
     </div>
     <div class="cards">
       <div class="card">
@@ -367,24 +367,24 @@
 <section id="gallery">
   <div class="wrap">
     <div class="sec-head">
-      <span class="eyebrow violet">Gallery</span>
-      <h2>The work.</h2>
-      <p>Real rooms, real crowds.</p>
+        <span class="k">Nightlife</span>
+        <h3>Bars &amp; Clubs</h3>
+        <p>Open-format sets for peak hours. Live mixing, quick crowd reads, and no recycled playlist.</p>
     </div>
     <!--
-      TO ADD PHOTOS: replace each .shot div with an <a class="shot"> containing an <img>.
-      Example:
-        <a class="shot">
+        <span class="k">College</span>
+        <h3>College &amp; Greek Life</h3>
+        <p>Mixers, formals, date parties, tailgates, and Greek events. Built for fast-moving college crowds.</p>
           <img src="nightlife.jpg" alt="VATO DJing a packed crowd at Ivy Nightclub, Morgantown WV" />
           <span class="cat">Nightlife</span>
-        </a>
-      Recommended shots in priority order (strongest first):
-        1. Packed nightlife floor / Ivy Nightclub crowd
+        <span class="k">Private</span>
+        <h3>Private Parties</h3>
+        <p>Birthdays, graduations, house parties, and local events. Smaller setups and full JBL sound available depending on the event.</p>
         2. You behind the decks, live mix shot
         3. College or Greek event crowd
-        4. Clean equipment setup shot
-
-      WHEN PHOTOS ARRIVE FROM THE PHOTOGRAPHER, add these two slots back:
+        <span class="k">By Request</span>
+        <h3>Weddings &amp; Corporate</h3>
+        <p>Available by request for weddings, corporate events, and formal bookings. Ceremony audio, announcements, timeline help, and reception DJing can be quoted by scope.</p>
         <a class="shot"><img src="private.jpg" alt="VATO at a private event" /><span class="cat">Private Event</span></a>
         <a class="shot"><img src="wedding.jpg" alt="VATO at a wedding reception" /><span class="cat">Wedding</span></a>
     -->
@@ -500,7 +500,7 @@
     <div class="sec-head">
       <span class="eyebrow violet">Packages</span>
       <h2>Booking options.</h2>
-      <p>Every booking is quoted to the event — type, hours, location, sound needs, and complexity all factor in. These are the formats; reach out for an exact quote.</p>
+      <p>Every booking is quoted by event type, hours, location, sound needs, and scope. These are starting points — send the details for an exact quote.</p>
     </div>
 
     <div class="pkgs">
@@ -509,52 +509,50 @@
         <h3>Nightlife / Club</h3>
         <div class="price">By venue<small>Booked per night</small></div>
         <ul>
-          <li>Performance-focused open-format set</li>
-          <li>Live mixing &amp; peak-hour energy</li>
-          <li>Reads your room and crowd</li>
-          <li>Works with venue sound or full JBL support when needed</li>
+          <li>Open-format live mixing</li>
+          <li>Peak-hour dancefloor energy</li>
+          <li>Venue sound or full JBL support</li>
+          <li>Travel quoted when needed</li>
         </ul>
         <a href="#contact" class="btn btn-ghost">Inquire</a>
       </div>
 
       <div class="pkg">
-        <span class="tag">Private Parties</span>
-        <h3>Private Event</h3>
-        <div class="price">Starting at $700<small>Quoted by event type, hours, and setup</small></div>
+        <span class="tag">Private &amp; College</span>
+        <h3>Parties &amp; College Events</h3>
+        <div class="price">From $500<small>Full JBL setups from $700+</small></div>
         <ul>
-          <li>Professional JBL system + subwoofer</li>
-          <li>Wireless microphone</li>
-          <li>Music planning to fit your event</li>
-          <li>Setup &amp; teardown included</li>
-          <li>DJ set matched to your crowd</li>
+          <li>Birthdays, graduations, and house parties</li>
+          <li>College, Greek life, and tailgate events</li>
+          <li>Wireless mic available</li>
+          <li>Music set for the room</li>
         </ul>
         <a href="#contact" class="btn btn-ghost">Request a quote</a>
       </div>
 
       <div class="pkg featured">
         <span class="tag">Larger Events</span>
-        <h3>Full Event Experience</h3>
-        <div class="price">Starting at $850<small>Quoted by scope</small></div>
+        <h3>Larger Events</h3>
+        <div class="price">Starting at $850<small>Extended coverage or added sound needs</small></div>
         <ul>
-          <li>Extended, multi-part coverage</li>
+          <li>Multi-part event coverage</li>
           <li>Full sound &amp; microphone support</li>
-          <li>Timeline support &amp; MC announcements</li>
+          <li>Timeline and announcement support</li>
           <li>Custom music planning</li>
-          <li>Extra prep and coordination</li>
         </ul>
         <a href="#contact" class="btn btn-primary">Request a quote</a>
       </div>
 
       <div class="pkg formal">
         <span class="tag">By Request</span>
-        <h3>Wedding Coverage</h3>
-        <div class="price">Reception-only coverage from $1,250 · ceremony + reception from $1,600+<small>By request · select dates</small></div>
+        <h3>Weddings &amp; Formal</h3>
+        <div class="price">Reception from $1,500+<small>Full wedding coverage usually starts around $2,500+</small></div>
         <ul>
-          <li>Ceremony and cocktail-hour audio available by quote</li>
-          <li>Reception and dance floor coverage</li>
-          <li>Wireless mic support for announcements</li>
-          <li>Timeline planning support by scope</li>
-          <li>Setup &amp; teardown included</li>
+          <li>Ceremony audio by quote</li>
+          <li>Cocktail-hour audio by quote</li>
+          <li>Reception DJ coverage</li>
+          <li>Wireless mic support</li>
+          <li>Timeline support by scope</li>
         </ul>
         <a href="#contact" class="btn btn-ghost">Check my date</a>
       </div>

@@ -1,1 +1,26 @@
-[]
+[
+	{
+		"name": "Blaine C.",
+		"source": "Google Review",
+		"rating": 5,
+		"event_type": "Wedding",
+		"date": "2026-06-20",
+		"excerpt": "Vince was exceptional. Highly highly recommend him for your wedding. Extremely thorough as he touched base with us several times beforehand regarding the timing of the songs. Cannot say enough good things. Awesome DJ and an awesome wedding!!"
+	},
+	{
+		"name": "Kyle S.",
+		"source": "Website Testimonial",
+		"rating": 5,
+		"event_type": "Wedding",
+		"date": "2026-06-20",
+		"excerpt": "VATO did amazing work at a wedding I was a part of this past weekend. I was impressed he had tracks for night clubs but also weddings. There’s not many DJs out there that can be good at both. Would highly recommend."
+	},
+	{
+		"name": "Dezarae C.",
+		"source": "Website Testimonial",
+		"rating": 5,
+		"event_type": "Wedding",
+		"date": "2026-06-20",
+		"excerpt": "Very attentive in making sure everything runs smoothly with every little detail."
+	}
+]
