@@ -181,6 +181,10 @@
   .review .who{font-size:.85rem;color:var(--muted)}
   .review .who b{color:var(--paper);font-weight:600}
 
+  #reviewCards { display: grid; gap: 16px; grid-template-columns: 1fr; }
+  @media(min-width:880px){ #reviewCards { grid-template-columns: repeat(2,1fr); } }
+  @media(min-width:1140px){ #reviewCards { grid-template-columns: repeat(3,1fr); } }
+
   #packages{background:var(--ink-2)}
   .pkgs{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;align-items:stretch}
   .pkg{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:30px 24px;display:flex;flex-direction:column}
@@ -436,27 +440,8 @@
       Use first name + last initial. Never invent or approximate quotes.
     -->
     <div style="margin-top:3rem">
-      <div class="approved-empty">Approved testimonials will be added here as reviews are collected.</div>
-
-      <!--
-      <div class="reviews">
-        <div class="review">
-          <div class="stars" aria-hidden="true">★★★★★</div>
-          <p>"Approved review text."</p>
-          <div class="who"><b>Name L.</b> · Wedding, June 2026 · Google</div>
-        </div>
-        <div class="review">
-          <div class="stars" aria-hidden="true">★★★★★</div>
-          <p>"Approved review text."</p>
-          <div class="who"><b>Name L.</b> · Private party · Verified client</div>
-        </div>
-        <div class="review">
-          <div class="stars" aria-hidden="true">★★★★★</div>
-          <p>"Approved review text."</p>
-          <div class="who"><b>Name L.</b> · College event · Verified client</div>
-        </div>
-      </div>
-      -->
+      <div id="reviewCards" class="reviews" aria-live="polite"></div>
+      <div id="reviewsFallback" class="approved-empty">Approved testimonials will be added here as reviews are collected.</div>
     </div>
 
     <!-- WEBSITE TESTIMONIAL FORM — separate from the booking form. Submissions go to Formspree for manual review; nothing posts automatically. -->
@@ -527,7 +512,7 @@
           <li>Performance-focused open-format set</li>
           <li>Live mixing &amp; peak-hour energy</li>
           <li>Reads your room and crowd</li>
-          <li>Works on house sound or I bring the full system</li>
+          <li>Works with venue sound or full JBL support when needed</li>
         </ul>
         <a href="#contact" class="btn btn-ghost">Inquire</a>
       </div>
@@ -563,12 +548,12 @@
       <div class="pkg formal">
         <span class="tag">By Request</span>
         <h3>Wedding Coverage</h3>
-        <div class="price">Starting at $1,250 (reception only) · from $1,600 with ceremony<small>By request · select dates</small></div>
+        <div class="price">Reception-only coverage from $1,250 · ceremony + reception from $1,600+<small>By request · select dates</small></div>
         <ul>
-          <li>Ceremony audio (if needed)</li>
-          <li>Cocktail hour &amp; reception</li>
-          <li>Wireless mics + MC announcements</li>
-          <li>Planning &amp; timeline coordination</li>
+          <li>Ceremony and cocktail-hour audio available by quote</li>
+          <li>Reception and dance floor coverage</li>
+          <li>Wireless mic support for announcements</li>
+          <li>Timeline planning support by scope</li>
           <li>Setup &amp; teardown included</li>
         </ul>
         <a href="#contact" class="btn btn-ghost">Check my date</a>
@@ -580,16 +565,16 @@
     <div class="enh">
       <h4>Enhancements &amp; Additional Services</h4>
       <div class="enh-grid">
-        <span class="chip">College / Greek Event Sound Package</span>
+        <span class="chip">College / Greek audio support</span>
         <span class="chip">Full System for Venues Without House Sound</span>
         <span class="chip">Additional Event Hours</span>
         <span class="chip">Additional Microphones</span>
         <span class="chip">Custom Song Edits &amp; Intro Mixes</span>
         <span class="chip">Second Location / Sound Zone</span>
         <span class="chip">Early / Extended Setup</span>
-        <span class="chip">Travel Outside Local Area</span>
-        <span class="chip">Cocktail-Hour Coverage</span>
-        <span class="chip">Ceremony Audio</span>
+        <span class="chip">Travel outside local area quoted separately</span>
+        <span class="chip">Cocktail-hour coverage by quote</span>
+        <span class="chip">Ceremony audio by quote</span>
       </div>
       <p class="note">Don't see what you need? Most requests can be built into a custom booking — just ask.</p>
     </div>
@@ -644,7 +629,7 @@
 
       <div class="faq-item">
         <button class="faq-q" aria-expanded="false"><span>What does it cost?</span><span class="ico">+</span></button>
-        <div class="faq-a"><div>Pricing depends on event type, hours, location, guest count, and whether I'm bringing full sound. Private events typically start at $700 for a full setup. Weddings start at $1,250 for reception coverage, and from $1,600 with ceremony included. Send your details and you'll get a clear, specific quote.</div></div>
+        <div class="faq-a"><div>Pricing depends on event type, hours, location, guest count, and whether I’m bringing full sound. Full bring-in local events generally begin around $700. Nightlife and club bookings depend on the venue setup, set time, and whether sound is provided. Wedding reception-only coverage starts around $1,250, while ceremony + reception generally starts around $1,600. Cocktail-hour coverage, travel, and multi-phase timelines are quoted separately. Send your details and you’ll get a clear, specific quote.</div></div>
       </div>
 
       <div class="faq-item">
@@ -771,6 +756,64 @@
       ans.style.maxHeight = open ? null : ans.scrollHeight + 'px';
     });
   });
+
+  async function loadReviews() {
+    const cards = document.getElementById('reviewCards');
+    const fallback = document.getElementById('reviewsFallback');
+
+    try {
+      const response = await fetch('reviews.json');
+      if (!response.ok) throw new Error('Could not load reviews');
+      const reviews = await response.json();
+
+      if (!Array.isArray(reviews) || reviews.length === 0) {
+        cards.style.display = 'none';
+        fallback.style.display = 'block';
+        return;
+      }
+
+      cards.innerHTML = reviews.map(createReviewCard).join('');
+      cards.style.display = 'grid';
+      fallback.style.display = 'none';
+    } catch (error) {
+      console.warn('Review load failed:', error);
+      cards.style.display = 'none';
+      fallback.style.display = 'block';
+    }
+  }
+
+  function createReviewCard(review) {
+    const rating = Math.max(0, Math.min(5, Number(review.rating) || 0));
+    const stars = '★'.repeat(rating) + '☆'.repeat(5 - rating);
+
+    const footerParts = [
+      review.name,
+      review.event_type,
+      review.venue,
+      review.source,
+      review.date
+    ]
+      .filter(Boolean)
+      .map(escapeHTML)
+      .join(' · ');
+
+    return `
+      <div class="review">
+        <div class="stars" aria-hidden="true">${stars}</div>
+        <p>${escapeHTML(review.excerpt || '')}</p>
+        <div class="who">${footerParts}</div>
+      </div>
+    `;
+  }
+
+  function escapeHTML(text) {
+    return String(text)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
+  }
+
+  loadReviews();
 </script>
 </body>
 </html>
