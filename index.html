@@ -234,6 +234,7 @@
   .form-microcopy{font-size:.88rem;color:var(--muted);margin-bottom:1.4rem}
   .field{margin-bottom:1rem}
   .field label{display:block;font-size:.78rem;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:.45rem}
+  .field label.required::after{content:"•";margin-left:.35rem;color:#E08178;font-size:.85em;line-height:1;vertical-align:text-bottom;}
   .field input,.field select,.field textarea{width:100%;background:var(--ink);border:1px solid var(--line-strong);border-radius:3px;color:var(--paper);font-family:var(--body);font-size:1rem;padding:.78rem .9rem;transition:.15s}
   .field input:focus,.field select:focus,.field textarea:focus{outline:0;border-color:var(--gold)}
   .field textarea{resize:vertical;min-height:100px}
@@ -643,12 +644,12 @@
         <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-5000px;opacity:0;pointer-events:none;" />
         <p class="form-microcopy">Send the basics below. I’ll follow up with availability, pricing, and next steps.</p>
         <div class="row2">
-          <div class="field"><label for="fname">Name</label><input id="fname" type="text" name="name" required /></div>
-          <div class="field"><label for="femail">Email</label><input id="femail" type="email" name="email" required /></div>
+          <div class="field"><label for="fname" class="required">Name</label><input id="fname" type="text" name="name" required /></div>
+          <div class="field"><label for="femail" class="required">Email</label><input id="femail" type="email" name="email" required /></div>
         </div>
         <div class="row2">
-          <div class="field"><label for="fphone">Phone, optional</label><input id="fphone" type="tel" name="phone" /></div>
-          <div class="field"><label for="fetype">Event type</label>
+          <div class="field"><label for="fphone">Phone</label><input id="fphone" type="tel" name="phone" /></div>
+          <div class="field"><label for="fetype" class="required">Event type</label>
             <select id="fetype" name="event_type" required>
               <option value="">Select…</option>
               <option>Bar / club booking</option>
@@ -662,16 +663,16 @@
           </div>
         </div>
         <div class="row2">
-          <div class="field"><label for="fdate">Event date</label><input id="fdate" type="date" name="event_date" required /></div>
-          <div class="field"><label for="fvenue">Venue or city</label><input id="fvenue" type="text" name="venue_city" placeholder="Venue name or city" required /></div>
+          <div class="field"><label for="fdate" class="required">Event date</label><input id="fdate" type="date" name="event_date" required /></div>
+          <div class="field"><label for="fvenue" class="required">Venue or city</label><input id="fvenue" type="text" name="venue_city" placeholder="Venue name or city" required /></div>
         </div>
         <div class="row2">
-          <div class="field"><label for="fguests">Guest count, optional</label><input id="fguests" type="text" name="guest_count" placeholder="e.g. 150" /></div>
-          <div class="field"><label for="fcoverage">Time needed, optional</label><input id="fcoverage" type="text" name="coverage" placeholder="e.g. 9pm–1am" /></div>
+          <div class="field"><label for="fguests">Guest count</label><input id="fguests" type="text" name="guest_count" placeholder="e.g. 150" /></div>
+          <div class="field"><label for="fcoverage">Time needed</label><input id="fcoverage" type="text" name="coverage" placeholder="e.g. 9pm–1am" /></div>
         </div>
         <div class="row2">
-          <div class="field"><label for="fservices">Services needed, optional</label><input id="fservices" type="text" name="services_needed" placeholder="DJ, sound, mics, ceremony, lighting, etc." /></div>
-          <div class="field"><label for="fheard">How did you hear about VATO? optional</label>
+          <div class="field"><label for="fservices">Services needed</label><input id="fservices" type="text" name="services_needed" placeholder="DJ, sound, mics, lighting, etc." /></div>
+          <div class="field"><label for="fheard">Referral source</label>
             <select id="fheard" name="referral_source">
               <option value="">Select…</option>
               <option>Instagram</option>
@@ -682,7 +683,7 @@
             </select>
           </div>
         </div>
-        <div class="field"><label for="fmsg">Event details</label><textarea id="fmsg" name="message" placeholder="Tell me what kind of event it is, the crowd, music, setup needs, and anything important." required></textarea></div>
+        <div class="field"><label for="fmsg" class="required">Event details</label><textarea id="fmsg" name="message" placeholder="Tell me what kind of event it is, the crowd, music, setup needs, and anything important." required></textarea></div>
         <button class="btn btn-primary" type="submit">Check availability</button>
       </form>
     </div>
