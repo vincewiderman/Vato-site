@@ -1,0 +1,17 @@
+{
+  "name": "vato-site",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node scripts/serve.mjs",
+    "build": "node scripts/validate-site.mjs",
+    "qualify:browser": "node scripts/qualify-browser.mjs",
+    "lint": "node --check script.js && node --check scripts/serve.mjs && node --check scripts/validate-site.mjs && node --check scripts/qualify-browser.mjs",
+    "test": "node --test tests/site.test.mjs",
+    "typecheck": "node --check script.js"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

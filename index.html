@@ -1,809 +1,376 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, shrink-to-fit=no">
+  <title>VATO — Nightclub &amp; Event DJ in Morgantown, WV</title>
+  <meta name="description" content="VATO is a nightlife-first, open-format DJ in Morgantown, WV—resident DJ and Assistant Entertainment Manager at Ivy Nightclub, with professional private-event and wedding capability.">
+  <meta name="author" content="Vince Widerman">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <meta name="theme-color" content="#08070c">
+  <link rel="canonical" href="https://djvato.com/">
+  <link rel="icon" href="logo.png" type="image/png">
+  <link rel="manifest" href="site.webmanifest">
 
-<!-- ============================================================
-     BEFORE GOING LIVE — fill these in (find & replace in this file):
-       1. G-1SQVER0811          -> your GA4 Measurement ID (appears 2x)
-       2. YOUR_FORM_ID          -> your Formspree form ID
-       3. EDIT_your_email       -> booking email  e.g. vince@vatodj.com
-       4. EDIT_your_phone       -> your number in format +13045551234
-       5. https://djvato.com    -> your domain e.g. https://vatodj.com
-       6. assets/vato-share-card.png -> live 1200x630 social share image
-       7. EDIT_google_review    -> Google review link (once profile is live)
-     FILES TO UPLOAD TO REPO ROOT: logo.png (white transparent version)
-     ============================================================ -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="VATO">
+  <meta property="og:title" content="VATO — Nightclub &amp; Event DJ in Morgantown, WV">
+  <meta property="og:description" content="Live mixing, real room reading, and a premium event experience—from Morgantown nightlife to select private events and weddings.">
+  <meta property="og:url" content="https://djvato.com/">
+  <meta property="og:image" content="https://djvato.com/assets/vato-share-card.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="VATO, open-format DJ in Morgantown, West Virginia">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="VATO — Nightclub &amp; Event DJ in Morgantown, WV">
+  <meta name="twitter:description" content="Nightlife-first open-format DJ for Morgantown clubs, college events, private events, and select weddings.">
+  <meta name="twitter:image" content="https://djvato.com/assets/vato-share-card.png">
 
-<title>VATO — Open-Format DJ in Morgantown, WV | Clubs, College, Greek Life & Private Events</title>
-<meta name="description" content="VATO (Vince Widerman) is an open-format DJ and resident at Ivy Nightclub in Morgantown, WV. Live mixing for bars, clubs, WVU and college events, Greek life, private parties, plus weddings and corporate events by request. Professional JBL sound." />
-<meta name="author" content="Vince Widerman" />
-<meta name="robots" content="index, follow" />
-<meta name="theme-color" content="#0C0B11" />
-<link rel="icon" href="logo.png" />
-<link rel="canonical" href="https://djvato.com/" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Syne:wght@500;600;700;800&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
 
-<meta property="og:title" content="VATO — Open-Format DJ | Morgantown, WV" />
-<meta property="og:description" content="Resident DJ at Ivy Nightclub. Clubs, college, Greek life, private events — weddings by request." />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://djvato.com" />
-<meta property="og:image" content="https://djvato.com/assets/vato-share-card.png" />
-<meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:image" content="https://djvato.com/assets/vato-share-card.png" />
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-1SQVER0811"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-1SQVER0811', { anonymize_ip: true });
+  </script>
 
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-1SQVER0811"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-1SQVER0811');
-</script>
-
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "LocalBusiness",
-  "additionalType": "https://schema.org/MusicGroup",
-  "name": "VATO",
-  "alternateName": "VATO DJ",
-  "description": "Open-format DJ in Morgantown, WV. Live mixing for bars, clubs, college and Greek life events, and private parties. Weddings and corporate events by request.",
-  "url": "https://djvato.com",
-  "image": "https://djvato.com/assets/vato-share-card.png",
-  "founder": { "@type": "Person", "name": "Vince Widerman" },
-  "address": { "@type": "PostalAddress", "addressLocality": "Morgantown", "addressRegion": "WV", "addressCountry": "US" },
-  "areaServed": [
-    { "@type": "City", "name": "Morgantown" },
-    { "@type": "AdministrativeArea", "name": "North Central West Virginia" }
-  ],
-  "knowsAbout": ["Open-format DJ", "Nightlife DJ", "College events", "Greek life events", "Private parties", "Weddings"],
-  "sameAs": ["https://instagram.com/vince_w29"]
-}
-</script>
-
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Hanken+Grotesque:wght@400;500;600;700&display=swap" rel="stylesheet" />
-
-<style>
-  :root{
-    --ink:#0C0B11; --ink-2:#131119; --ink-3:#1B1825; --card:#17141f;
-    --gold:#C9A24A; --gold-soft:#E4C77E; --violet:#8A5CFF; --violet-soft:#B79BFF;
-    --paper:#F3F0EA; --muted:#9A95A6;
-    --line:rgba(255,255,255,0.10); --line-strong:rgba(255,255,255,0.18);
-    --display:"Bricolage Grotesque",system-ui,sans-serif;
-    --body:"Hanken Grotesque",system-ui,sans-serif;
-    --maxw:1140px;
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": "VATO",
+    "alternateName": "VATO DJ",
+    "description": "Nightlife-first open-format DJ serving Morgantown, West Virginia, with club, college, private-event and wedding capability.",
+    "url": "https://djvato.com/",
+    "image": "https://djvato.com/assets/vato-share-card.png",
+    "founder": { "@type": "Person", "name": "Vince Widerman" },
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Morgantown",
+      "addressRegion": "WV",
+      "addressCountry": "US"
+    },
+    "areaServed": [
+      { "@type": "City", "name": "Morgantown" },
+      { "@type": "AdministrativeArea", "name": "North Central West Virginia" }
+    ],
+    "knowsAbout": ["Open-format DJ", "Nightclub DJ", "College events", "Greek-life events", "Private events", "Wedding receptions"],
+    "sameAs": ["https://instagram.com/vince_w29"]
   }
-  *{box-sizing:border-box;margin:0;padding:0}
-  html{scroll-behavior:smooth}
-  body{background:var(--ink);color:var(--paper);font-family:var(--body);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
-  a{color:inherit;text-decoration:none}
-  img{max-width:100%;display:block}
-  ::selection{background:var(--gold);color:var(--ink)}
-  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
-  .eyebrow{font-size:.74rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);font-weight:600}
-  .eyebrow.violet{color:var(--violet-soft)}
-
-  .btn{display:inline-flex;align-items:center;gap:.55rem;font-weight:600;font-size:.95rem;padding:.85rem 1.5rem;border-radius:2px;cursor:pointer;border:1px solid transparent;transition:.18s ease}
-  .btn-primary{background:var(--gold);color:var(--ink)}
-  .btn-primary:hover{background:var(--gold-soft);transform:translateY(-1px)}
-  .btn-ghost{border-color:var(--line-strong);color:var(--paper)}
-  .btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
-  .btn:focus-visible{outline:2px solid var(--gold-soft);outline-offset:3px}
-
-  header.nav{position:sticky;top:0;z-index:50;background:rgba(12,11,17,.72);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
-  .nav-inner{display:flex;align-items:center;justify-content:space-between;height:68px}
-  .brand{display:inline-flex;align-items:center}
-  .logo-img{height:34px;width:auto;display:block}
-  .logo-img.foot{height:30px;opacity:.9}
-  .nav-links{display:flex;align-items:center;gap:2rem}
-  .nav-links a{font-size:.9rem;color:var(--muted);font-weight:500;transition:.15s}
-  .nav-links a:hover{color:var(--paper)}
-  .nav-cta{margin-left:.5rem}
-  .menu-btn{display:none;background:none;border:0;color:var(--paper);cursor:pointer}
-
-  .hero{position:relative;padding:clamp(80px,12vw,150px) 0 70px;overflow:hidden}
-  .hero::before{content:"";position:absolute;inset:0;z-index:0;background:radial-gradient(58% 55% at 80% 6%,rgba(138,92,255,.20),transparent 60%),radial-gradient(55% 60% at 8% 95%,rgba(201,162,74,.13),transparent 60%);pointer-events:none}
-  .hero .wrap{position:relative;z-index:1}
-  .hero h1{font-family:var(--display);font-weight:800;font-size:clamp(2.7rem,8vw,5.4rem);line-height:.98;letter-spacing:-.02em;margin:1.1rem 0 1.3rem;max-width:16ch}
-  .hero h1 .accent{color:var(--gold)}
-  .hero-sub{font-size:clamp(1.05rem,2.4vw,1.28rem);color:var(--muted);max-width:52ch;margin-bottom:2.1rem}
-  .hero-actions{display:flex;gap:.9rem;flex-wrap:wrap}
-  .hero-meta{margin-top:1.6rem;font-size:.86rem;color:var(--muted)}
-  .hero-meta b{color:var(--paper);font-weight:600}
-
-  .eq{display:flex;align-items:flex-end;gap:5px;height:50px;margin:2.4rem 0 0}
-  .eq span{width:5px;background:linear-gradient(var(--gold-soft),var(--gold));border-radius:1px;height:18%;animation:bounce 1.3s ease-in-out infinite}
-  .eq span:nth-child(1){animation-delay:-1.1s}.eq span:nth-child(2){animation-delay:-.4s}.eq span:nth-child(3){animation-delay:-.8s}.eq span:nth-child(4){animation-delay:-.2s}.eq span:nth-child(5){animation-delay:-.9s}.eq span:nth-child(6){animation-delay:-.5s}.eq span:nth-child(7){animation-delay:-1.2s}.eq span:nth-child(8){animation-delay:-.3s}.eq span:nth-child(9){animation-delay:-.7s}.eq span:nth-child(10){animation-delay:-.6s}.eq span:nth-child(11){animation-delay:-1s}.eq span:nth-child(12){animation-delay:-.45s}
-  @keyframes bounce{0%,100%{height:18%}50%{height:100%}}
-
-  .proof{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--ink-2)}
-  .proof-grid{display:grid;grid-template-columns:repeat(4,1fr)}
-  .proof-item{padding:28px 22px;border-right:1px solid var(--line)}
-  .proof-item:last-child{border-right:0}
-  .proof-item .num{font-family:var(--display);font-weight:800;font-size:1.35rem;color:var(--gold);line-height:1.15}
-  .proof-item .lbl{font-size:.84rem;color:var(--muted);margin-top:.3rem}
-
-  section{padding:clamp(64px,9vw,108px) 0}
-  .sec-head{max-width:62ch;margin-bottom:3rem}
-  .sec-head h2{font-family:var(--display);font-weight:800;font-size:clamp(1.9rem,4.5vw,3rem);line-height:1.04;letter-spacing:-.02em;margin:.7rem 0 1rem}
-  .sec-head p{color:var(--muted);font-size:1.08rem}
-
-  .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
-  .card{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:30px 26px;transition:.2s ease;position:relative;overflow:hidden}
-  .card::after{content:"";position:absolute;left:0;top:0;height:3px;width:100%;background:var(--violet);transform:scaleX(0);transform-origin:left;transition:.25s}
-  .card:hover{border-color:var(--line-strong);transform:translateY(-3px)}
-  .card:hover::after{transform:scaleX(1)}
-  .card.formal::after{background:var(--gold)}
-  .card .k{font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--violet-soft);font-weight:600}
-  .card.formal .k{color:var(--gold)}
-  .card h3{font-family:var(--display);font-weight:600;font-size:1.3rem;margin:.7rem 0 .6rem}
-  .card p{color:var(--muted);font-size:.95rem}
-
-  .gallery{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
-  .shot{display:block}
-  .shot img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;border:1px solid var(--line);border-radius:4px;background:linear-gradient(135deg,#1b1825,#221d30)}
-  .shot .cat{display:block;margin-top:.7rem;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);font-weight:600}
-
-  .about{display:grid;grid-template-columns:1fr 1.05fr;gap:56px;align-items:center}
-  .about .photo{aspect-ratio:4/5;background:var(--ink-3);border:1px solid var(--line);border-radius:4px;overflow:hidden;background-image:linear-gradient(135deg,#1b1825,#221d30)}
-  .about .photo img{width:100%;height:100%;object-fit:cover}
-  .about h2{font-family:var(--display);font-weight:800;font-size:clamp(1.8rem,4vw,2.7rem);line-height:1.05;letter-spacing:-.02em;margin:.8rem 0 1.2rem}
-  .about p{color:var(--muted);margin-bottom:1.1rem}
-  .about p strong{color:var(--paper);font-weight:600}
-  .setup-line{margin-top:1.5rem;padding-top:1.3rem;border-top:1px solid var(--line);font-size:.92rem;color:var(--muted)}
-  .setup-line b{color:var(--paper);font-weight:600}
-
-  #reviews{background:var(--ink-2)}
-  .reviews-empty{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:46px 34px;text-align:center;max-width:680px;margin:0 auto}
-  .reviews-empty p{color:var(--muted);font-size:1.05rem;margin-bottom:1.6rem}
-  .review-cta-row{display:flex;gap:.7rem;justify-content:center;flex-wrap:wrap}
-  .review-intro{max-width:640px;margin:0 auto 2.4rem;text-align:center}
-  .review-intro p{color:var(--muted);font-size:1.05rem}
-  .approved-empty{text-align:center;color:var(--muted);font-size:.98rem;border:1px dashed var(--line-strong);border-radius:4px;padding:34px 26px;max-width:640px;margin:0 auto}
-  .review-actions{display:flex;gap:.7rem;justify-content:center;flex-wrap:wrap;margin-top:2rem}
-  .review-actions .btn{min-width:220px;justify-content:center}
-  .testimonial-form-wrap{max-width:620px;margin:2rem auto 0;scroll-margin-top:90px}
-  .testimonial-form-wrap > h3{font-family:var(--display);font-weight:600;font-size:1.3rem;text-align:center;margin-bottom:.5rem}
-  .testimonial-form-wrap > p.tf-sub{color:var(--muted);font-size:.92rem;text-align:center;margin-bottom:1.6rem}
-  .testimonial-form-wrap form{padding:24px 22px;background:rgba(23,20,31,.9)}
-  .form-success{display:none;max-width:640px;margin:0 auto 1.4rem;padding:1rem 1.1rem;border:1px solid rgba(201,162,74,.3);background:rgba(201,162,74,.12);color:var(--paper);border-radius:4px;text-align:center}
-  .form-success.is-visible{display:block}
-  .star-input{display:flex;flex-direction:row-reverse;justify-content:center;gap:.35rem}
-  .star-input input{position:absolute;opacity:0;width:0;height:0}
-  .star-input label{font-size:1.7rem;color:var(--ink-3);cursor:pointer;transition:.12s;line-height:1}
-  .star-input label::before{content:"\2605"}
-  .star-input input:checked ~ label,
-  .star-input label:hover,
-  .star-input label:hover ~ label{color:var(--gold)}
-  .star-input input:focus-visible + label{outline:2px solid var(--gold-soft);outline-offset:2px;border-radius:2px}
-  .check-field{display:flex;gap:.7rem;align-items:flex-start;margin-bottom:1rem}
-  .check-field input{margin-top:.25rem;width:18px;height:18px;flex-shrink:0;accent-color:var(--gold)}
-  .check-field label{font-size:.86rem;color:var(--muted);line-height:1.5}
-  .reviews{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-  .review{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:28px 26px}
-  .review .stars{color:var(--gold);letter-spacing:.12em;margin-bottom:.9rem}
-  .review p{color:var(--paper);font-size:.98rem;margin-bottom:1.1rem}
-  .review .who{font-size:.85rem;color:var(--muted)}
-  .review .who b{color:var(--paper);font-weight:600}
-
-  #reviewCards { display: grid; gap: 16px; grid-template-columns: 1fr; }
-  @media(min-width:880px){ #reviewCards { grid-template-columns: repeat(2,1fr); } }
-  @media(min-width:1140px){ #reviewCards { grid-template-columns: repeat(3,1fr); } }
-
-  #packages{background:var(--ink-2)}
-  .pkgs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px;align-items:stretch}
-  .pkg{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:30px 24px;display:flex;flex-direction:column}
-  .pkg.featured{border-color:var(--violet);box-shadow:0 0 0 1px var(--violet) inset}
-  .pkg .tag{font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--violet-soft);font-weight:600;min-height:1.2em}
-  .pkg.formal .tag{color:var(--gold)}
-  .pkg h3{font-family:var(--display);font-weight:600;font-size:1.3rem;margin:.55rem 0 .3rem}
-  .pkg .price{font-family:var(--display);font-weight:800;font-size:1.15rem;line-height:1.1;color:var(--paper);margin:.3rem 0}
-  .pkg .price small{display:block;font-family:var(--body);font-weight:500;font-size:.76rem;color:var(--muted);letter-spacing:.03em;margin-top:.2rem}
-  .pkg ul{list-style:none;margin:1.2rem 0;display:grid;gap:.75rem;flex:1}
-  .pkg li{font-size:.9rem;color:var(--muted);display:flex;gap:.55rem;align-items:flex-start}
-  .pkg li::before{content:"\2713";color:var(--gold);font-weight:700;flex-shrink:0}
-  .pkg .btn{width:100%;justify-content:center}
-  .pricing-note{margin-top:1.8rem;font-size:.92rem;color:var(--muted);max-width:70ch}
-
-  .enh{margin-top:2.4rem;background:var(--card);border:1px solid var(--line);border-radius:4px;padding:30px 28px}
-  .enh h4{font-family:var(--display);font-weight:600;font-size:1.15rem;margin-bottom:1rem}
-  .enh-grid{display:flex;flex-wrap:wrap;gap:.7rem}
-  .chip{font-size:.85rem;color:var(--paper);border:1px solid var(--line-strong);border-radius:40px;padding:.45rem 1rem}
-  .enh .note{font-size:.82rem;color:var(--muted);margin-top:1.3rem}
-
-  .faq-item{border-bottom:1px solid var(--line)}
-  .faq-q{width:100%;text-align:left;background:none;border:0;color:var(--paper);cursor:pointer;font-family:var(--body);font-weight:600;font-size:1.08rem;padding:1.25rem 0;display:flex;justify-content:space-between;align-items:center;gap:1rem}
-  .faq-q:focus-visible{outline:2px solid var(--gold-soft);outline-offset:3px}
-  .faq-q .ico{color:var(--gold);font-size:1.4rem;transition:.2s;flex-shrink:0}
-  .faq-q[aria-expanded="true"] .ico{transform:rotate(45deg)}
-  .faq-a{max-height:0;overflow:hidden;transition:max-height .25s ease;color:var(--muted)}
-  .faq-a div{padding:0 0 1.25rem;max-width:68ch}
-
-  #contact{background:var(--ink-2)}
-  .contact-grid{display:grid;grid-template-columns:1fr 1.15fr;gap:54px;align-items:start}
-  .contact-info h2{font-family:var(--display);font-weight:800;font-size:clamp(1.9rem,4vw,2.8rem);line-height:1.05;letter-spacing:-.02em;margin:.8rem 0 1.1rem}
-  .contact-info p{color:var(--muted);margin-bottom:1.6rem;max-width:40ch}
-  .contact-direct{display:grid;gap:1rem;margin-top:1.4rem}
-  .contact-direct a{display:flex;align-items:center;gap:.8rem;color:var(--paper);font-weight:500}
-  .contact-direct a:hover{color:var(--gold)}
-  .contact-direct .lbl{font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);display:block;font-weight:600}
-
-  form{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:32px 30px}
-  .form-microcopy{font-size:.88rem;color:var(--muted);margin-bottom:1.4rem}
-  .field{margin-bottom:1rem}
-  .field label{display:block;font-size:.78rem;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:.45rem}
-  .field label.required::after{content:"•";margin-left:.35rem;color:#E08178;font-size:.85em;line-height:1;vertical-align:text-bottom;}
-  .field input,.field select,.field textarea{width:100%;background:var(--ink);border:1px solid var(--line-strong);border-radius:3px;color:var(--paper);font-family:var(--body);font-size:1rem;padding:.78rem .9rem;transition:.15s}
-  .field input:focus,.field select:focus,.field textarea:focus{outline:0;border-color:var(--gold)}
-  .field textarea{resize:vertical;min-height:100px}
-  .row2{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
-  form .btn{width:100%;justify-content:center;margin-top:.5rem}
-
-  footer{padding:48px 0 40px;border-top:1px solid var(--line)}
-  .foot{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1.5rem}
-  .foot-links{display:flex;gap:1.6rem;flex-wrap:wrap}
-  .foot-links a{color:var(--muted);font-size:.9rem}
-  .foot-links a:hover{color:var(--gold)}
-  .copy{color:var(--muted);font-size:.82rem;margin-top:1.4rem;line-height:1.7}
-
-  @media(max-width:980px){
-    .cards,.pkgs{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
-  }
-  @media(max-width:880px){
-    .nav-links{position:fixed;inset:68px 0 auto 0;background:var(--ink-2);flex-direction:column;align-items:flex-start;gap:0;padding:8px 24px 20px;border-bottom:1px solid var(--line);display:none}
-    .nav-links.open{display:flex}
-    .nav-links a{width:100%;padding:.9rem 0;border-bottom:1px solid var(--line)}
-    .nav-cta{margin:.8rem 0 0}
-    .menu-btn{display:block}
-    .proof-grid{grid-template-columns:repeat(2,1fr)}
-    .proof-item:nth-child(2){border-right:0}
-    .proof-item:nth-child(1),.proof-item:nth-child(2){border-bottom:1px solid var(--line)}
-    .gallery{grid-template-columns:1fr 1fr}
-    .reviews{grid-template-columns:1fr}
-    .about,.contact-grid{grid-template-columns:1fr;gap:36px}
-    .row2{grid-template-columns:1fr}
-  }
-  @media(max-width:560px){
-    .cards,.pkgs,.gallery{grid-template-columns:1fr;gap:16px}
-  }
-  @media(prefers-reduced-motion:reduce){
-    *{animation:none!important;scroll-behavior:auto!important;transition:none!important}
-    .eq span{height:60%}
-  }
-</style>
+  </script>
 </head>
 <body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="site-grain" aria-hidden="true"></div>
 
-<!-- NAV -->
-<header class="nav">
-  <div class="wrap nav-inner">
-    <a href="#top" class="brand" aria-label="VATO home">
-      <img src="logo.png" alt="VATO" class="logo-img" />
-    </a>
-    <nav class="nav-links" id="navLinks">
-      <a href="#services">Services</a>
-      <a href="#about">About</a>
-      <a href="#gallery">Gallery</a>
-      <a href="#reviews">Reviews</a>
-      <a href="#packages">Packages</a>
-      <a href="#faq">FAQ</a>
-      <a href="#contact" class="btn btn-primary nav-cta">Check availability</a>
-    </nav>
-    <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false">
-      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-    </button>
-  </div>
-</header>
-
-<main id="top">
-<div id="formSuccess" class="form-success" role="status" aria-live="polite">Thanks — your note is on its way. I’ll follow up soon.</div>
-
-<!-- HERO -->
-<section class="hero">
-  <div class="wrap">
-    <span class="eyebrow violet">Resident DJ &amp; Assistant Entertainment Manager · Ivy Nightclub · Morgantown, WV</span>
-    <h1><span class="accent">Live mixing</span> for nightlife, college crowds, and private events.</h1>
-    <p class="hero-sub">Open-format sets mixed live for clubs, Greek life, pool parties, and private events. JBL sound available when the event needs it, with setup, timing, and music handled clearly. Weddings and formal events available by request.</p>
-    <div class="hero-actions">
-      <a href="#contact" class="btn btn-primary">Check availability</a>
-      <a href="#packages" class="btn btn-ghost">See packages &amp; pricing</a>
-    </div>
-    <p class="hero-meta">Resident DJ at Ivy Nightclub · <b>North Central WV</b> + select regional events</p>
-    <div class="eq" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-  </div>
-</section>
-
-<!-- PROOF STRIP -->
-<div class="proof">
-  <div class="wrap">
-    <div class="proof-grid">
-      <div class="proof-item">
-        <div class="num">Resident DJ</div>
-        <div class="lbl">Ivy Nightclub &amp; Joe Mamas, Morgantown WV</div>
-      </div>
-      <div class="proof-item">
-        <div class="num">Open-Format</div>
-        <div class="lbl">Rap, pop, house, throwbacks &amp; more</div>
-      </div>
-      <div class="proof-item">
-        <div class="num">Live Mixing</div>
-        <div class="lbl">Every set mixed in real time — no playlists</div>
-      </div>
-      <div class="proof-item">
-        <div class="num">Pro JBL Sound</div>
-        <div class="lbl">Full system + mics, available for travel</div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- SERVICES -->
-<section id="services">
-  <div class="wrap">
-    <div class="sec-head">
-      <span class="eyebrow violet">What I do</span>
-      <h2>Nightlife mixing with event-level prep.</h2>
-      <p>Live sets, clean transitions, reliable sound, and the planning needed to keep the night moving. Built for bars, college events, private parties, and select formal events by request.</p>
-    </div>
-    <div class="cards">
-      <div class="card">
-        <span class="k">Nightlife</span>
-        <h3>Bars &amp; Clubs</h3>
-        <p>Open-format sets for peak hours. Live mixing, quick crowd reads, and no recycled playlist.</p>
-      </div>
-      <div class="card">
-        <span class="k">College</span>
-        <h3>College &amp; Greek Life</h3>
-        <p>Mixers, formals, date parties, philanthropy events, and tailgates. Built for fast-moving college crowds.</p>
-      </div>
-      <div class="card">
-        <span class="k">Private</span>
-        <h3>Private Parties</h3>
-        <p>Birthdays, graduations, holiday parties — any size. Professional sound, the right volume, and a set matched to your crowd, not a recycled playlist.</p>
-      </div>
-      <div class="card formal">
-        <span class="k">By Request</span>
-        <h3>Weddings &amp; Corporate</h3>
-        <p>Select weddings and formal events: ceremony audio, MC announcements, a planned timeline, and a reception floor that stays full. By request.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- GALLERY -->
-<section id="gallery">
-  <div class="wrap">
-    <div class="sec-head">
-      <span class="eyebrow">Gallery</span>
-      <h2>Recent sets.</h2>
-      <p>A look at the rooms, setups, and events VATO is built for.</p>
-    </div>
-    <div class="gallery">
-      <div class="shot"><img src="gallery-nightlife.jpg" alt="VATO DJing a packed nightlife crowd with stage lighting" /><span class="cat">Nightlife</span></div>
-      <div class="shot"><img src="gallery-decks.jpg" alt="VATO live behind the decks with the VATO LED wall" /><span class="cat">Behind the Decks</span></div>
-      <div class="shot"><img src="gallery-college.jpg" alt="VATO performing for a packed college and Greek life crowd" /><span class="cat">College &amp; Greek</span></div>
-      <div class="shot"><img src="gallery-setup.jpg" alt="VATO professional JBL sound system setup" /><span class="cat">Setup &amp; Sound</span></div>
-    </div>
-  </div>
-</section>
-
-<!-- ABOUT -->
-<section id="about">
-  <div class="wrap">
-    <div class="about">
-      <div class="photo">
-        <img src="about.jpg" alt="Vince Widerman (VATO), open-format DJ at Ivy Nightclub in Morgantown WV" />
-      </div>
-      <div>
-        <span class="eyebrow">About VATO</span>
-        <h2>I'm Vince Widerman. I DJ as VATO.</h2>
-        <p>I'm an open-format DJ in Morgantown, West Virginia — <strong>a resident DJ at Ivy Nightclub and Joe Mamas</strong>, and the assistant entertainment manager at Ivy. Most of my work is live nightlife crowds, which is exactly what makes me different at events. I've learned how a room actually moves, so I'm not guessing when the energy needs to shift.</p>
-        <p>Open-format means I'm not stuck in one lane — rap, house, throwbacks, country, pop, mixed live to whatever the night calls for. <strong>For private and formal events, that same instinct comes with preparation:</strong> clear communication, professional mics, and the right volume for the room.</p>
-        <p>My engineering background shapes how I approach every booking — every part of the night planned in advance, nothing left to chance.</p>
-        <p class="setup-line"><b>The setup:</b> Pioneer DDJ-FLX10 · dual JBL EON 715 mains with EON 718S subwoofer · wireless mic system + Shure SM58 · professional stands and cabling.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- REVIEWS -->
-<section id="reviews">
-  <div class="wrap">
-    <div class="sec-head" style="text-align:center;margin-left:auto;margin-right:auto">
-      <span class="eyebrow">Reviews</span>
-      <h2>Recent feedback.</h2>
-      <p>Real feedback from people who have seen VATO handle the room.</p>
-    </div>
-
-    <div style="margin-top:3rem">
-      <div id="reviewCards" class="reviews" aria-live="polite"></div>
-      <div id="reviewsFallback" class="approved-empty">Approved testimonials will appear here once they’ve been reviewed.</div>
-    </div>
-
-    <div class="review-actions">
-      <a href="https://g.page/r/CR0kMmEMyEyyEBM/review" class="btn btn-ghost" target="_blank" rel="noopener">Leave a Google Review</a>
-      <a href="#testimonial-form" class="btn btn-ghost">Submit a Website Testimonial</a>
-    </div>
-
-    <div class="testimonial-form-wrap" id="testimonial-form">
-      <h3>Submit a website testimonial</h3>
-      <p class="tf-sub">Reviewed before anything is published. Honest feedback only.</p>
-      <form action="https://formspree.io/f/mqevadpk" method="POST">
-        <input type="hidden" name="_subject" value="New VATO Website Testimonial" />
-        <input type="hidden" name="_next" value="https://djvato.com/?submitted=1" />
-        <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-5000px;opacity:0;pointer-events:none;" />
-        <div class="row2">
-          <div class="field"><label for="rname">Name</label><input id="rname" type="text" name="name" required /></div>
-          <div class="field"><label for="remail">Email</label><input id="remail" type="email" name="email" required /></div>
-        </div>
-        <div class="row2">
-          <div class="field"><label for="retype">Event type</label>
-            <select id="retype" name="event_type" required>
-              <option value="">Select…</option>
-              <option>Bar / club night</option>
-              <option>College / Greek life event</option>
-              <option>Private party</option>
-              <option>Wedding</option>
-              <option>Corporate / formal</option>
-              <option>Other</option>
-            </select>
-          </div>
-          <div class="field"><label for="redate">Event date</label><input id="redate" type="date" name="event_date" /></div>
-        </div>
-        <div class="field">
-          <label for="rrating">Star rating</label>
-          <select id="rrating" name="rating" required>
-            <option value="">Select…</option>
-            <option value="5">5 stars</option>
-            <option value="4">4 stars</option>
-            <option value="3">3 stars</option>
-            <option value="2">2 stars</option>
-            <option value="1">1 star</option>
-          </select>
-        </div>
-        <div class="field"><label for="rreview">Your review</label><textarea id="rreview" name="testimonial" placeholder="What stood out about working with VATO?" required></textarea></div>
-        <div class="check-field">
-          <input id="rperm" type="checkbox" name="permission" value="yes" required />
-          <label for="rperm">I give VATO permission to display this review on djvato.com, social media, and promotional material.</label>
-        </div>
-        <div class="field"><label for="rprivate">Private feedback</label><textarea id="rprivate" name="private_feedback" placeholder="Anything I could have done better? This stays private."></textarea></div>
-        <button class="btn btn-primary" type="submit">Submit testimonial</button>
-      </form>
-    </div>
-
-    <p style="text-align:center;color:var(--muted);font-size:.85rem;margin-top:2rem">Nightlife, college events, private parties, and select weddings by request.</p>
-  </div>
-</section>
-
-
-<!-- PACKAGES -->
-<section id="packages">
-  <div class="wrap">
-    <div class="sec-head">
-      <span class="eyebrow violet">Packages</span>
-      <h2>Booking options.</h2>
-      <p>Every booking is quoted by event type, hours, location, sound needs, and scope. These are starting points — send the details for an exact quote.</p>
-    </div>
-
-    <div class="pkgs">
-      <div class="pkg">
-        <span class="tag">Venues &amp; Promoters</span>
-        <h3>Nightlife / Club</h3>
-        <div class="price">By venue<small>Booked per night</small></div>
-        <ul>
-          <li>Open-format live mixing</li>
-          <li>Peak-hour dancefloor energy</li>
-          <li>Venue sound or full JBL support</li>
-          <li>Travel quoted when needed</li>
-        </ul>
-        <a href="#contact" class="btn btn-ghost">Inquire</a>
-      </div>
-
-      <div class="pkg">
-        <span class="tag">Private &amp; College</span>
-        <h3>Parties &amp; College Events</h3>
-        <div class="price">From $500<small>Full JBL setups from $700+</small></div>
-        <ul>
-          <li>Birthdays, graduations, and house parties</li>
-          <li>College, Greek life, and tailgate events</li>
-          <li>Wireless mic available</li>
-          <li>Music set for the room</li>
-        </ul>
-        <a href="#contact" class="btn btn-ghost">Request a quote</a>
-      </div>
-
-      <div class="pkg featured">
-        <span class="tag">Larger Events</span>
-        <h3>Larger Events</h3>
-        <div class="price">Starting at $850<small>Extended coverage or added sound needs</small></div>
-        <ul>
-          <li>Multi-part event coverage</li>
-          <li>Full sound &amp; microphone support</li>
-          <li>Timeline and announcement support</li>
-          <li>Custom music planning</li>
-        </ul>
-        <a href="#contact" class="btn btn-primary">Request a quote</a>
-      </div>
-
-      <div class="pkg formal">
-        <span class="tag">By Request</span>
-        <h3>Weddings &amp; Formal</h3>
-        <div class="price">Reception from $1,500+<small>Full wedding coverage usually starts around $2,500+</small></div>
-        <ul>
-          <li>Ceremony audio by quote</li>
-          <li>Cocktail-hour audio by quote</li>
-          <li>Reception DJ coverage</li>
-          <li>Wireless mic support</li>
-          <li>Timeline support by scope</li>
-        </ul>
-        <a href="#contact" class="btn btn-ghost">Check my date</a>
-      </div>
-    </div>
-
-    <p class="pricing-note">Starting prices reflect a typical booking for standard coverage. Final pricing depends on event type, hours, location, guest count, and scope — send your details and you'll get a clear, specific quote.</p>
-
-    <div class="enh">
-      <h4>Enhancements &amp; Additional Services</h4>
-      <div class="enh-grid">
-        <span class="chip">College / Greek audio support</span>
-        <span class="chip">Full System for Venues Without House Sound</span>
-        <span class="chip">Additional Event Hours</span>
-        <span class="chip">Additional Microphones</span>
-        <span class="chip">Custom Song Edits &amp; Intro Mixes</span>
-        <span class="chip">Second Location / Sound Zone</span>
-        <span class="chip">Early / Extended Setup</span>
-        <span class="chip">Travel outside local area quoted separately</span>
-        <span class="chip">Cocktail-hour coverage by quote</span>
-        <span class="chip">Ceremony audio by quote</span>
-      </div>
-      <p class="note">Don't see what you need? Most requests can be built into a custom booking — just ask.</p>
-    </div>
-  </div>
-</section>
-
-<!-- FAQ -->
-<section id="faq">
-  <div class="wrap">
-    <div class="sec-head"><span class="eyebrow violet">FAQ</span><h2>Good to know.</h2></div>
-    <div id="faqList">
-
-      <div class="faq-item">
-        <button class="faq-q" aria-expanded="false"><span>What types of events do you DJ?</span><span class="ico">+</span></button>
-        <div class="faq-a"><div>Bars and clubs, college and Greek life events, private parties, graduations, and birthdays — plus weddings and corporate events by request. Open-format means I adapt the set to the room rather than forcing one sound all night.</div></div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-q" aria-expanded="false"><span>Do you DJ college and Greek life events?</span><span class="ico">+</span></button>
-        <div class="faq-a"><div>Yes — mixers, formals, date parties, philanthropy events, and tailgates. I know what a college crowd reacts to and how to keep the floor full all night.</div></div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-q" aria-expanded="false"><span>Do you DJ bars and clubs?</span><span class="ico">+</span></button>
-        <div class="faq-a"><div>Yes. I'm the resident DJ at Ivy Nightclub in Morgantown and play open-format sets built for peak hours. I can work on a venue's house system or bring my full setup.</div></div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-q" aria-expanded="false"><span>Do you provide your own sound system and microphones?</span><span class="ico">+</span></button>
-        <div class="faq-a"><div>Yes. I run dual JBL EON 715 speakers with an EON 718S subwoofer, a wireless mic system, and a Shure SM58 — professional, reliable sound for events of most sizes. For club bookings I can also work on the house system.</div></div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-q" aria-expanded="false"><span>Do you take requests? Can we give must-play and do-not-play lists?</span><span class="ico">+</span></button>
-        <div class="faq-a"><div>Absolutely. We plan must-plays and do-not-plays ahead of time, and I read the floor live from there. You get the songs that matter without losing the energy.</div></div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-q" aria-expanded="false"><span>What kind of music do you play?</span><span class="ico">+</span></button>
-        <div class="faq-a"><div>Open-format: hip-hop, house, throwbacks, pop, country, and more — mixed live and matched to your crowd and the moment.</div></div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-q" aria-expanded="false"><span>Do you do weddings and provide ceremony audio?</span><span class="ico">+</span></button>
-        <div class="faq-a"><div>Yes. Weddings are available by request, including ceremony audio, cocktail hour, reception DJing, wireless mics, announcements, and timeline support.</div></div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-q" aria-expanded="false"><span>How far do you travel?</span><span class="ico">+</span></button>
-        <div class="faq-a"><div>I'm based in Morgantown and cover North Central WV, plus select regional travel. Travel beyond the local area is factored into your quote.</div></div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-q" aria-expanded="false"><span>What does it cost?</span><span class="ico">+</span></button>
-        <div class="faq-a"><div>Pricing depends on event type, hours, location, guest count, and sound needs. Smaller local parties can start around $500, while full JBL setups generally start around $700+. Larger events start around $850. Wedding reception coverage starts around $1,500+, and full wedding coverage usually starts around $2,500+. Cocktail-hour coverage, travel, and multi-phase timelines are quoted separately. Send the details and you’ll get a clear quote.</div></div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-q" aria-expanded="false"><span>How do we book, and what does the setup require?</span><span class="ico">+</span></button>
-        <div class="faq-a"><div>Send an inquiry, we confirm the details, and the date is held with an agreement and deposit. For setup I typically need a stable power source near the area and access to load in — I'll confirm specifics once we talk through the event.</div></div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- CONTACT -->
-<section id="contact">
-  <div class="wrap">
-    <div class="contact-grid">
-      <div class="contact-info">
-        <span class="eyebrow">Contact</span>
-        <h2>Check availability.</h2>
-        <p>Send the event details and I’ll follow up with availability, next steps, and a quote.</p>
-        <div class="contact-direct">
-          <a href="mailto:bookings@djvato.com"><span><span class="lbl">Email</span>Send an email</span></a>
-          <a href="sms:+13362794506"><span><span class="lbl">Text</span>Send a text</span></a>
-          <a href="https://instagram.com/vince_w29" target="_blank" rel="noopener"><span><span class="lbl">Instagram</span>@vince_w29</span></a>
-        </div>
-      </div>
-
-      <form action="https://formspree.io/f/xlgyeqkq" method="POST">
-        <input type="hidden" name="_subject" value="New Booking Inquiry — VATO" />
-        <input type="hidden" name="_next" value="https://djvato.com/?submitted=1" />
-        <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-5000px;opacity:0;pointer-events:none;" />
-        <p class="form-microcopy">Send the basics below. I’ll follow up with availability, pricing, and next steps.</p>
-        <div class="row2">
-          <div class="field"><label for="fname" class="required">Name</label><input id="fname" type="text" name="name" required /></div>
-          <div class="field"><label for="femail" class="required">Email</label><input id="femail" type="email" name="email" required /></div>
-        </div>
-        <div class="row2">
-          <div class="field"><label for="fphone">Phone</label><input id="fphone" type="tel" name="phone" /></div>
-          <div class="field"><label for="fetype" class="required">Event type</label>
-            <select id="fetype" name="event_type" required>
-              <option value="">Select…</option>
-              <option>Bar / club booking</option>
-              <option>College / Greek life event</option>
-              <option>Private party</option>
-              <option>Graduation</option>
-              <option>Wedding (by request)</option>
-              <option>Corporate / formal (by request)</option>
-              <option>Other</option>
-            </select>
-          </div>
-        </div>
-        <div class="row2">
-          <div class="field"><label for="fdate" class="required">Event date</label><input id="fdate" type="date" name="event_date" required /></div>
-          <div class="field"><label for="fvenue" class="required">Venue or city</label><input id="fvenue" type="text" name="venue_city" placeholder="Venue name or city" required /></div>
-        </div>
-        <div class="row2">
-          <div class="field"><label for="fguests">Guest count</label><input id="fguests" type="text" name="guest_count" placeholder="e.g. 150" /></div>
-          <div class="field"><label for="fcoverage">Time needed</label><input id="fcoverage" type="text" name="coverage" placeholder="e.g. 9pm–1am" /></div>
-        </div>
-        <div class="row2">
-          <div class="field"><label for="fservices">Services needed</label><input id="fservices" type="text" name="services_needed" placeholder="DJ, sound, mics, lighting, etc." /></div>
-          <div class="field"><label for="fheard">Referral source</label>
-            <select id="fheard" name="referral_source">
-              <option value="">Select…</option>
-              <option>Instagram</option>
-              <option>Ivy Nightclub / Joe Mamas</option>
-              <option>Referral / word of mouth</option>
-              <option>Google search</option>
-              <option>Other</option>
-            </select>
-          </div>
-        </div>
-        <div class="field"><label for="fmsg" class="required">Event details</label><textarea id="fmsg" name="message" placeholder="Tell me what kind of event it is, the crowd, music, setup needs, and anything important." required></textarea></div>
-        <button class="btn btn-primary" type="submit">Check availability</button>
-      </form>
-    </div>
-  </div>
-</section>
-
-</main>
-
-<!-- FOOTER -->
-<footer>
-  <div class="wrap">
-    <div class="foot">
-      <a href="#top" class="brand" aria-label="VATO home">
-        <img src="logo.png" alt="VATO" class="logo-img foot" />
+  <header class="site-header" data-header>
+    <div class="nav-shell">
+      <a class="brand" href="#top" aria-label="VATO home">
+        <img src="logo.png" width="1024" height="1024" alt="VATO">
       </a>
-      <div class="foot-links">
-        <a href="#services">Services</a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+        <span class="sr-only">Open menu</span><span></span><span></span>
+      </button>
+      <nav id="site-nav" class="site-nav" aria-label="Primary navigation">
+        <a href="#proof">Experience</a>
+        <a href="#services">Events</a>
         <a href="#gallery">Gallery</a>
-        <a href="#reviews">Reviews</a>
-        <a href="#packages">Packages</a>
+        <a href="#pricing">Pricing</a>
         <a href="#faq">FAQ</a>
-        <a href="#contact">Contact</a>
-        <a href="https://instagram.com/vince_w29" target="_blank" rel="noopener">Instagram</a>
-      </div>
+        <a class="button button-small" href="#booking" data-track="nav_booking">Check availability</a>
+      </nav>
     </div>
-    <div class="copy">
-      &copy; <span id="yr"></span> VATO &middot; Vince Widerman &mdash; Open-Format DJ &middot; Morgantown, WV<br>
-      Serving Morgantown &amp; North Central WV &mdash; bars, clubs, WVU &amp; college events, Greek life, private parties, weddings and corporate events by request.
-    </div>
-  </div>
-</footer>
+  </header>
 
-<script>
-  document.getElementById('yr').textContent = new Date().getFullYear();
-
-  const formSuccess = document.getElementById('formSuccess');
-  const params = new URLSearchParams(window.location.search);
-  if (params.get('submitted') === '1' && formSuccess) {
-    formSuccess.classList.add('is-visible');
-  }
-
-  const menuBtn = document.getElementById('menuBtn');
-  const navLinks = document.getElementById('navLinks');
-  menuBtn.addEventListener('click', () => {
-    const open = navLinks.classList.toggle('open');
-    menuBtn.setAttribute('aria-expanded', open);
-  });
-  navLinks.querySelectorAll('a').forEach(a =>
-    a.addEventListener('click', () => {
-      navLinks.classList.remove('open');
-      menuBtn.setAttribute('aria-expanded', false);
-    })
-  );
-
-  document.querySelectorAll('.faq-q').forEach(q => {
-    q.addEventListener('click', () => {
-      const open = q.getAttribute('aria-expanded') === 'true';
-      const ans = q.nextElementSibling;
-      q.setAttribute('aria-expanded', !open);
-      ans.style.maxHeight = open ? null : ans.scrollHeight + 'px';
-    });
-  });
-
-  async function loadReviews() {
-    const cards = document.getElementById('reviewCards');
-    const fallback = document.getElementById('reviewsFallback');
-
-    try {
-      const response = await fetch('reviews.json');
-      if (!response.ok) throw new Error('Could not load reviews');
-      const reviews = await response.json();
-
-      if (!Array.isArray(reviews) || reviews.length === 0) {
-        cards.style.display = 'none';
-        fallback.style.display = 'block';
-        return;
-      }
-
-      cards.innerHTML = reviews.map(createReviewCard).join('');
-      cards.style.display = 'grid';
-      fallback.style.display = 'none';
-    } catch (error) {
-      console.warn('Review load failed:', error);
-      cards.style.display = 'none';
-      fallback.style.display = 'block';
-    }
-  }
-
-  function createReviewCard(review) {
-    const rating = Math.max(0, Math.min(5, Number(review.rating) || 0));
-    const stars = '★'.repeat(rating) + '☆'.repeat(5 - rating);
-
-    const footerParts = [
-      review.name,
-      review.event_type,
-      review.venue,
-      review.source,
-      review.date
-    ]
-      .filter(Boolean)
-      .map(escapeHTML)
-      .join(' · ');
-
-    return `
-      <div class="review">
-        <div class="stars" aria-hidden="true">${stars}</div>
-        <p>${escapeHTML(review.excerpt || '')}</p>
-        <div class="who">${footerParts}</div>
+  <main id="main">
+    <section id="top" class="hero" aria-labelledby="hero-title" data-hero data-video-ready="false">
+      <div class="hero-venue" aria-hidden="true">
+        <img src="assets/media/hero-ivy-live-1560.jpg" srcset="assets/media/hero-ivy-live-960.jpg 960w, assets/media/hero-ivy-live-1560.jpg 1560w" sizes="100vw" width="1560" height="1170" alt="" fetchpriority="high" decoding="async">
       </div>
-    `;
-  }
+      <div class="hero-crowd" aria-hidden="true">
+        <img src="assets/media/ivy-packed-crowd-1152.jpg" srcset="assets/media/ivy-packed-crowd-640.jpg 640w, assets/media/ivy-packed-crowd-1152.jpg 1152w" sizes="45vw" width="1152" height="1536" alt="" fetchpriority="high" decoding="async">
+      </div>
+      <figure class="hero-subject">
+        <div class="hero-subject-frame">
+          <img src="assets/media/ivy-live-mixing-clean-1024.jpg" srcset="assets/media/ivy-live-mixing-clean-640.jpg 640w, assets/media/ivy-live-mixing-clean-1024.jpg 1024w" sizes="(max-width: 700px) 86vw, 44vw" width="1024" height="1536" alt="Vince Widerman performing as VATO on nightclub decks" fetchpriority="high" decoding="async">
+        </div>
+        <figcaption><span>Vince Widerman</span><b>VATO / Live mix</b></figcaption>
+      </figure>
+      <div class="hero-decks" aria-hidden="true">
+        <img src="assets/media/production-controller-1536.jpg" width="1536" height="1152" alt="" decoding="async">
+      </div>
+      <div class="hero-orbit hero-orbit-a" aria-hidden="true"></div>
 
-  function escapeHTML(text) {
-    return String(text)
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;');
-  }
+      <div class="hero-content">
+        <p class="eyebrow"><span>01 / Live</span>Morgantown, West Virginia</p>
+        <h1 id="hero-title"><span class="hero-title-line">VATO</span><span class="hero-title-command">controls<br>the <em>room.</em></span></h1>
+        <p class="hero-lede">Nightclub-tested open-format sets, mixed live around the people actually in front of the booth.</p>
+        <div class="hero-actions">
+          <a class="button" href="#booking" data-track="hero_booking">Check availability <span aria-hidden="true">↗</span></a>
+          <a class="text-link" href="#proof" data-track="hero_experience">Enter the experience <span aria-hidden="true">↓</span></a>
+        </div>
+      </div>
 
-  loadReviews();
-</script>
+      <div class="hero-credentials" aria-label="Verified nightlife credentials">
+        <div><span>Ivy Nightclub</span><b>Resident DJ</b></div>
+        <div><span>Ivy Nightclub</span><b>Assistant Entertainment Manager</b></div>
+        <div><span>Joe Mama's</span><b>Resident DJ</b></div>
+      </div>
+      <div class="hero-scroll" aria-hidden="true"><span></span>Scroll / experience</div>
+    </section>
+
+    <section id="proof" class="residency-story" aria-labelledby="story-title" data-story>
+      <div class="story-pin">
+        <div class="story-atmosphere" aria-hidden="true"></div>
+        <div class="story-shell">
+          <header class="story-heading">
+            <p class="eyebrow"><span>02 / Residencies</span>Night after night</p>
+            <h2 id="story-title">Not booked once.<br><em>Trusted repeatedly.</em></h2>
+          </header>
+          <div class="story-stage" data-story-stage="0">
+            <div class="story-ghost" aria-hidden="true">
+              <span>IVY</span><span>JOE'S</span><span>LIVE</span><span>OPEN</span>
+            </div>
+            <figure class="story-frame is-active" data-story-image="0">
+              <img src="assets/media/ivy-packed-crowd-1152.jpg" srcset="assets/media/ivy-packed-crowd-640.jpg 640w, assets/media/ivy-packed-crowd-1152.jpg 1152w" sizes="(max-width: 820px) 92vw, 53vw" width="1152" height="1536" alt="Packed dance floor at Ivy Nightclub under magenta and blue light" loading="eager" decoding="async">
+            </figure>
+            <figure class="story-frame" data-story-image="1">
+              <img src="assets/media/joe-mamas-live-837.jpg" srcset="assets/media/joe-mamas-live-640.jpg 640w, assets/media/joe-mamas-live-837.jpg 837w" sizes="(max-width: 820px) 82vw, 38vw" width="837" height="1063" alt="VATO performing beneath the Joe Mama's venue logo" loading="lazy" decoding="async">
+            </figure>
+            <figure class="story-frame" data-story-image="2">
+              <img src="assets/media/ivy-side-performance-1152.jpg" srcset="assets/media/ivy-side-performance-640.jpg 640w, assets/media/ivy-side-performance-1152.jpg 1152w" sizes="(max-width: 820px) 92vw, 48vw" width="1152" height="1536" alt="VATO actively mixing on club decks" loading="lazy" decoding="async">
+            </figure>
+            <figure class="story-frame" data-story-image="3">
+              <img src="assets/media/ivy-crowd-decks-1242.jpg" srcset="assets/media/ivy-crowd-decks-640.jpg 640w, assets/media/ivy-crowd-decks-1242.jpg 1242w" sizes="(max-width: 820px) 92vw, 48vw" width="1242" height="2208" alt="Crowd response seen from the decks at Ivy Nightclub" loading="lazy" decoding="async">
+            </figure>
+            <div class="story-counter" aria-hidden="true"><span data-story-number>01</span><small>/ 04</small></div>
+            <div class="story-progress" aria-hidden="true"><span></span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="story-steps">
+        <article class="story-step is-active" data-story-step="0" data-accent="violet">
+          <p>Residency / 01</p>
+          <h3>Ivy<br>Nightclub</h3>
+          <strong>Resident DJ + Assistant Entertainment Manager</strong>
+          <span>Recurring proof in a real Morgantown room—behind the decks and the entertainment operation.</span>
+        </article>
+        <article class="story-step" data-story-step="1" data-accent="red">
+          <p>Residency / 02</p>
+          <h3>Joe<br>Mama's</h3>
+          <strong>Resident DJ</strong>
+          <span>A second recurring room with the same expectation: know how to move it.</span>
+        </article>
+        <article class="story-step" data-story-step="2" data-accent="accent">
+          <p>Performance / 03</p>
+          <h3>Mixed<br>live</h3>
+          <strong>Selection. Timing. Transitions.</strong>
+          <span>The plan starts the set. The crowd decides where it goes next.</span>
+        </article>
+        <article class="story-step" data-story-step="3" data-accent="blue">
+          <p>Range / 04</p>
+          <h3>Open<br>format</h3>
+          <strong>College energy. Larger-room flexibility.</strong>
+          <span>Hip-hop, house, pop, throwbacks, country, and the turns between them.</span>
+        </article>
+      </div>
+    </section>
+
+    <div class="type-river" aria-hidden="true" data-type-river>
+      <div><span>NIGHTLIFE</span><i>◆</i><span>LIVE MIXING</span><i>◆</i><span>MORGANTOWN</span><i>◆</i><span>VATO</span></div>
+    </div>
+
+    <section id="services" class="event-spectrum" aria-labelledby="services-title">
+      <div class="spectrum-intro reveal">
+        <p class="eyebrow"><span>03 / Range</span>One standard. Different rooms.</p>
+        <h2 id="services-title">Nightlife is<br>the <em>foundation.</em></h2>
+        <p>Preparation, sound, microphones, and real-time room reading scale with the event.</p>
+      </div>
+      <div class="spectrum-body">
+        <figure class="spectrum-visual reveal">
+          <img src="assets/media/ivy-vato-led-1536.jpg" srcset="assets/media/ivy-vato-led-640.jpg 640w, assets/media/ivy-vato-led-1536.jpg 1536w" sizes="(max-width: 820px) calc(100vw - 36px), 44vw" width="1536" height="1152" alt="VATO performing beside his venue LED identity" loading="lazy" decoding="async">
+          <figcaption>VATO / Venue environment</figcaption>
+        </figure>
+        <div class="spectrum-list">
+          <article><span>01</span><h3>Nightlife &amp; bars</h3><p>Open-format sets shaped live around the room.</p></article>
+          <article><span>02</span><h3>College &amp; Greek life</h3><p>Formals, date parties, tailgates, and campus events.</p></article>
+          <article><span>03</span><h3>Private &amp; larger events</h3><p>Sound, microphones, coordination, and custom production.</p></article>
+          <article><span>04</span><h3>Weddings &amp; formals</h3><p>Music planning, timeline awareness, and live room reading.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="mix-manifesto" aria-labelledby="mix-title" data-mix>
+      <div class="mix-pin">
+        <div class="mix-words" aria-hidden="true"><span>LISTEN</span><span>READ</span><span>MOVE</span></div>
+        <figure class="mix-visual">
+          <img src="assets/media/ivy-booth-crowd-1170.jpg" srcset="assets/media/ivy-booth-crowd-640.jpg 640w, assets/media/ivy-booth-crowd-1170.jpg 1170w" sizes="(max-width: 820px) 88vw, 44vw" width="1170" height="1560" alt="VATO performing toward a packed nightclub room" loading="lazy" decoding="async">
+        </figure>
+        <div class="mix-copy">
+          <p class="eyebrow"><span>04 / The difference</span>Live mixing</p>
+          <h2 id="mix-title">The room<br>talks back.</h2>
+          <p>VATO watches what lands and makes the next decision in real time.</p>
+          <div class="mix-signals"><span>01 Listen</span><span>02 Read</span><span>03 Move</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="gallery" class="media-journey" aria-labelledby="gallery-title" data-media-journey>
+      <div class="media-pin">
+        <header class="media-heading">
+          <div><p class="eyebrow"><span>05 / Media</span>Inside the room</p><h2 id="gallery-title">Six frames.<br><em>One night moving.</em></h2></div>
+          <p>Scroll the sequence. Open any frame for the full composition.</p>
+        </header>
+        <div class="media-viewport" data-media-viewport tabindex="0" aria-label="VATO performance gallery">
+          <div class="media-track" data-media-track>
+            <button class="media-frame media-frame-wide" type="button" data-gallery-index="0">
+              <img src="assets/media/ivy-packed-crowd-1152.jpg" srcset="assets/media/ivy-packed-crowd-640.jpg 640w, assets/media/ivy-packed-crowd-1152.jpg 1152w" width="1152" height="1536" alt="Packed Ivy Nightclub dance floor" loading="lazy" decoding="async">
+              <span><b>01</b><strong>Room response</strong><small>Ivy Nightclub</small></span>
+            </button>
+            <button class="media-frame media-frame-portrait" type="button" data-gallery-index="2">
+              <img src="assets/media/ivy-booth-crowd-1170.jpg" srcset="assets/media/ivy-booth-crowd-640.jpg 640w, assets/media/ivy-booth-crowd-1170.jpg 1170w" width="1170" height="1560" alt="VATO facing a packed crowd from the booth" loading="lazy" decoding="async">
+              <span><b>02</b><strong>In the room</strong><small>Booth perspective</small></span>
+            </button>
+            <button class="media-frame media-frame-square" type="button" data-gallery-index="1">
+              <img src="assets/media/ivy-vato-led-1536.jpg" srcset="assets/media/ivy-vato-led-640.jpg 640w, assets/media/ivy-vato-led-1536.jpg 1536w" width="1536" height="1152" alt="VATO mixing beside a large venue LED display" loading="lazy" decoding="async">
+              <span><b>03</b><strong>Live identity</strong><small>VATO / LED environment</small></span>
+            </button>
+            <button class="media-frame media-frame-portrait" type="button" data-gallery-index="3">
+              <img src="assets/media/ivy-side-performance-1152.jpg" srcset="assets/media/ivy-side-performance-640.jpg 640w, assets/media/ivy-side-performance-1152.jpg 1152w" width="1152" height="1536" alt="VATO actively mixing on nightclub decks" loading="lazy" decoding="async">
+              <span><b>04</b><strong>Live mixing</strong><small>Hands on the controls</small></span>
+            </button>
+            <button class="media-frame media-frame-square" type="button" data-gallery-index="5">
+              <img src="assets/media/joe-mamas-live-837.jpg" srcset="assets/media/joe-mamas-live-640.jpg 640w, assets/media/joe-mamas-live-837.jpg 837w" width="837" height="1063" alt="VATO performing beneath the Joe Mama's venue logo" loading="lazy" decoding="async">
+              <span><b>05</b><strong>Second residency</strong><small>Joe Mama's</small></span>
+            </button>
+            <button class="media-frame media-frame-wide" type="button" data-gallery-index="7">
+              <img src="assets/media/production-controller-1536.jpg" srcset="assets/media/production-controller-640.jpg 640w, assets/media/production-controller-1536.jpg 1536w" width="1536" height="1152" alt="Professional DJ controller, decks, and mixer" loading="lazy" decoding="async">
+              <span><b>06</b><strong>Production</strong><small>Prepared to perform</small></span>
+            </button>
+          </div>
+        </div>
+        <div class="media-progress" aria-hidden="true"><span></span></div>
+      </div>
+    </section>
+
+    <section class="wedding-proof" aria-labelledby="wedding-title">
+      <div class="wedding-stage">
+        <div class="wedding-copy reveal">
+          <p class="eyebrow"><span>06 / Formal proof</span>Mebane, North Carolina</p>
+          <h2 id="wedding-title">Nightlife instincts.<br><em>Wedding discipline.</em></h2>
+          <p>On June 20, 2026, VATO completed a Mebane wedding—coordinating the reception, supporting event flow, and keeping a broad guest mix engaged.</p>
+          <dl>
+            <div><dt>Home market</dt><dd>Morgantown, WV</dd></div>
+            <div><dt>Completed</dt><dd>June 20, 2026</dd></div>
+            <div><dt>Travel</dt><dd>Selective</dd></div>
+          </dl>
+          <small>Morgantown remains home. This is completed North Carolina event experience, not a North Carolina office or residency.</small>
+        </div>
+        <div class="wedding-collage reveal">
+          <button class="wedding-photo wedding-photo-main" type="button" data-gallery-index="8" aria-label="Open Mebane wedding setup image">
+            <img src="assets/media/mebane-room-1152.jpg" srcset="assets/media/mebane-room-640.jpg 640w, assets/media/mebane-room-1152.jpg 1152w" width="1152" height="1536" alt="Professional VATO sound and DJ setup in the Mebane wedding room" loading="lazy" decoding="async">
+          </button>
+          <button class="wedding-photo wedding-photo-detail" type="button" data-gallery-index="9" aria-label="Open Mebane wedding booth image">
+            <img src="assets/media/mebane-booth-1152.jpg" srcset="assets/media/mebane-booth-640.jpg 640w, assets/media/mebane-booth-1152.jpg 1152w" width="1152" height="1536" alt="Mebane wedding reception viewed from VATO's professional DJ booth" loading="lazy" decoding="async">
+          </button>
+          <div class="wedding-stamp" aria-hidden="true"><b>06.20</b><span>2026 / NC</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="pricing" class="pricing" aria-labelledby="pricing-title">
+      <div class="pricing-head reveal">
+        <p class="eyebrow"><span>07 / Scope</span>Built around the event</p>
+        <h2 id="pricing-title">Different rooms.<br><em>Different requirements.</em></h2>
+        <p>Event length, location, coverage, production, and complexity shape the final quote.</p>
+      </div>
+      <div class="scope-list">
+        <article class="scope-row reveal"><span>01</span><div><p>Nightclub / Bar</p><small>Venue, night, schedule, and production</small></div><h3>Custom</h3><a href="#booking" aria-label="Discuss nightclub or bar booking">↗</a></article>
+        <article class="scope-row reveal"><span>02</span><div><p>College / Private</p><small>Scoped around the event and actual coverage</small></div><h3>Custom</h3><a href="#booking" aria-label="Discuss college or private booking">↗</a></article>
+        <article class="scope-row scope-row-acid reveal"><span>03</span><div><p>Larger Private Events</p><small>Standard or larger private-event coverage</small></div><h3><sup>Starting at</sup>$600</h3><a href="#booking" aria-label="Request a larger private event quote">↗</a></article>
+        <article class="scope-row scope-row-formal reveal"><span>04</span><div><p>Wedding Reception</p><small>Full-wedding coverage remains anchored at $1,500.</small></div><h3><sup>Reception from</sup>$900</h3><a href="#booking" aria-label="Check a wedding date">↗</a></article>
+      </div>
+      <p class="pricing-disclosure reveal">Starting points are planning guidance, not automatic or binding quotes. Final scope is confirmed before booking.</p>
+    </section>
+
+    <section id="reviews" class="reviews-section" aria-labelledby="reviews-title">
+      <header class="reviews-heading reveal">
+        <p class="eyebrow"><span>08 / Feedback</span>Verified words</p>
+        <h2 id="reviews-title">Professional before.<br><em>Present during.</em></h2>
+      </header>
+      <div id="review-cards" class="review-stack" aria-live="polite"></div>
+      <p id="reviews-fallback" class="reviews-fallback" hidden>Reviews are temporarily unavailable. View the current Google review profile instead.</p>
+      <a class="text-link review-link" href="https://g.page/r/CR0kMmEMyEyyEBM/review" target="_blank" rel="noopener">See or leave a Google review <span aria-hidden="true">↗</span></a>
+    </section>
+
+    <section id="faq" class="faq" aria-labelledby="faq-title">
+      <header class="faq-heading reveal"><p class="eyebrow"><span>09 / Details</span>Before you book</p><h2 id="faq-title">Clear before<br><em>the night.</em></h2></header>
+      <div class="faq-list reveal">
+        <details><summary>What does open-format mean?<span>+</span></summary><p>The set can move across hip-hop, house, pop, throwbacks, country, and other styles as the room calls for it. Transitions and pacing are mixed live.</p></details>
+        <details><summary>Does VATO provide sound and microphones?<span>+</span></summary><p>Professional sound and microphone support are available. The exact system is confirmed from the venue, guest count, coverage, and event requirements.</p></details>
+        <details><summary>Can we give must-play and do-not-play songs?<span>+</span></summary><p>Yes. Client priorities are discussed ahead of time, then VATO reads the room around them so the plan and live energy work together.</p></details>
+        <details><summary>Does VATO travel?<span>+</span></summary><p>Yes, selectively. VATO is based in Morgantown and prioritizes West Virginia. The completed Mebane wedding is North Carolina experience, not an established North Carolina office.</p></details>
+        <details><summary>How does booking work?<span>+</span></summary><p>Send the event basics below. VATO will confirm availability, clarify production and coverage, and provide a specific quote. An inquiry alone does not reserve the date.</p></details>
+      </div>
+    </section>
+
+    <section id="booking" class="booking" aria-labelledby="booking-title">
+      <div class="booking-word" aria-hidden="true">BOOK</div>
+      <div class="booking-intro reveal">
+        <p class="eyebrow"><span>10 / Booking</span>Start the conversation</p>
+        <h2 id="booking-title">Bring VATO<br>into the <em>room.</em></h2>
+        <p>Share the essentials for availability, fit, and a specific quote.</p>
+        <div class="direct-links">
+          <a href="sms:+13362794506"><span>Text</span><b>+1 336 279 4506</b></a>
+          <a href="https://instagram.com/vince_w29" target="_blank" rel="noopener"><span>Instagram</span><b>@vince_w29</b></a>
+        </div>
+      </div>
+      <div class="form-wrap reveal">
+        <div id="form-success" class="form-notice" role="status" aria-live="polite" hidden>Thanks—your inquiry was received. VATO will follow up directly.</div>
+        <form id="booking-form" action="https://formspree.io/f/xlgyeqkq" method="post" novalidate>
+          <input type="hidden" name="_subject" value="New Booking Inquiry — VATO">
+          <input type="hidden" name="_next" value="https://djvato.com/?submitted=1#booking">
+          <input class="honeypot" type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <div class="field-row">
+            <div class="field"><label for="name">Name <span>Required</span></label><input id="name" name="name" type="text" autocomplete="name" required><small class="field-error" id="name-error"></small></div>
+            <div class="field"><label for="email">Email <span>Required</span></label><input id="email" name="email" type="email" autocomplete="email" required><small class="field-error" id="email-error"></small></div>
+          </div>
+          <div class="field-row">
+            <div class="field"><label for="phone">Phone <span>Optional</span></label><input id="phone" name="phone" type="tel" autocomplete="tel" inputmode="tel"></div>
+            <div class="field"><label for="event-type">Event type <span>Required</span></label><select id="event-type" name="event_type" required><option value="">Choose one</option><option>Nightclub / bar</option><option>College / Greek-life event</option><option>Private party</option><option>Wedding / formal</option><option>Corporate / school / community</option><option>Larger or custom event</option></select><small class="field-error" id="event-type-error"></small></div>
+          </div>
+          <div class="field-row">
+            <div class="field"><label for="date">Event date <span>Required</span></label><input id="date" name="event_date" type="date" required><small class="field-error" id="date-error"></small></div>
+            <div class="field"><label for="location">Venue or city <span>Required</span></label><input id="location" name="venue_city" type="text" autocomplete="street-address" placeholder="Venue or city" required><small class="field-error" id="location-error"></small></div>
+          </div>
+          <div class="field"><label for="details">What should VATO know? <span>Required</span></label><textarea id="details" name="message" rows="5" placeholder="Timing, crowd, music direction, sound needs, and anything that matters." required></textarea><small class="field-error" id="details-error"></small></div>
+          <button class="button form-submit" type="submit">Check availability <span aria-hidden="true">↗</span></button>
+          <p class="form-fineprint">Submitting starts a conversation—it does not reserve a date or create a binding quote.</p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <a class="brand footer-brand" href="#top" aria-label="VATO home"><img src="logo.png" width="1024" height="1024" alt="VATO"></a>
+    <p>Nightlife-first. Event-ready.<br>Morgantown, West Virginia.</p>
+    <nav aria-label="Footer navigation"><a href="#proof">Experience</a><a href="#services">Events</a><a href="#gallery">Gallery</a><a href="#pricing">Pricing</a><a href="#booking">Booking</a></nav>
+    <div class="footer-meta"><a href="https://instagram.com/vince_w29" target="_blank" rel="noopener">Instagram ↗</a><p>© <span data-year></span> VATO / Vince Widerman</p></div>
+  </footer>
+
+  <dialog class="lightbox" aria-label="Expanded gallery image">
+    <button class="lightbox-close" type="button" aria-label="Close image">×</button>
+    <button class="lightbox-nav lightbox-prev" type="button" aria-label="Previous image">←</button>
+    <figure><img src="assets/media/ivy-packed-crowd-1152.jpg" alt=""><figcaption></figcaption></figure>
+    <button class="lightbox-nav lightbox-next" type="button" aria-label="Next image">→</button>
+  </dialog>
+
+  <script src="script.js" defer></script>
 </body>
 </html>

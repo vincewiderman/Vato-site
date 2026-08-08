@@ -1,0 +1,17 @@
+{
+  "name": "VATO — Vince Widerman",
+  "short_name": "VATO",
+  "description": "Nightlife-first open-format DJ in Morgantown, West Virginia.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#08070c",
+  "theme_color": "#08070c",
+  "icons": [
+    {
+      "src": "/logo.png",
+      "sizes": "1024x1024",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

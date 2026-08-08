@@ -1,0 +1,7 @@
+node_modules/
+qa-output/
+qa-before-correction/
+qa-after-correction/
+qa-before-refinement/
+qa-after-refinement/
+qa-production/
