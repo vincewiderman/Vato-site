@@ -38,6 +38,73 @@ document.querySelectorAll('[data-track]').forEach((element) => {
   element.addEventListener('click', () => track('booking_cta_click', { placement: element.dataset.track }));
 });
 
+const datesSection = document.querySelector('[data-dates]');
+if (datesSection) {
+  const upcomingList = datesSection.querySelector('[data-upcoming-list]');
+  const recentList = datesSection.querySelector('[data-recent-list]');
+  const scheduleEvents = [...datesSection.querySelectorAll('[data-schedule-event]')];
+  const seededRecentEvents = [...datesSection.querySelectorAll('[data-recent-event]')];
+  const datesToggle = datesSection.querySelector('[data-dates-toggle]');
+  const toggleLabel = datesToggle.querySelector('[data-dates-toggle-label]');
+  const toggleCount = datesToggle.querySelector('[data-dates-toggle-count]');
+  const upcomingCount = datesSection.querySelector('[data-upcoming-count]');
+  const datesFallback = datesSection.querySelector('[data-dates-fallback]');
+  let currentUpcoming = [];
+
+  const morgantownDateKey = () => {
+    const parts = new Intl.DateTimeFormat('en-US', {
+      timeZone: 'America/New_York', year: 'numeric', month: '2-digit', day: '2-digit'
+    }).formatToParts(new Date());
+    const values = Object.fromEntries(parts.map(({ type, value }) => [type, value]));
+    return `${values.year}-${values.month}-${values.day}`;
+  };
+
+  const setScheduleExpanded = (expanded, trackChange = false) => {
+    datesToggle.setAttribute('aria-expanded', String(expanded));
+    toggleLabel.textContent = expanded ? 'Show fewer dates' : 'View full fall schedule';
+    toggleCount.textContent = expanded ? `${currentUpcoming.length} dates shown` : `${Math.max(0, currentUpcoming.length - 4)} more dates`;
+    currentUpcoming.forEach((event, index) => { event.hidden = !expanded && index >= 4; });
+    if (trackChange) track('dates_schedule_toggle', { expanded });
+  };
+
+  const refreshDates = (todayKey = morgantownDateKey()) => {
+    currentUpcoming = scheduleEvents
+      .filter((event) => event.dataset.eventDate >= todayKey)
+      .sort((a, b) => a.dataset.eventDate.localeCompare(b.dataset.eventDate));
+    const completed = scheduleEvents.filter((event) => event.dataset.eventDate < todayKey);
+
+    currentUpcoming.forEach((event) => {
+      const tonight = event.dataset.eventDate === todayKey;
+      event.classList.remove('date-row-recent');
+      event.classList.toggle('is-tonight', tonight);
+      event.querySelector('[data-tonight]').hidden = !tonight;
+      upcomingList.append(event);
+    });
+
+    const recentEvents = [...seededRecentEvents, ...completed]
+      .sort((a, b) => b.dataset.eventDate.localeCompare(a.dataset.eventDate));
+    recentEvents.forEach((event, index) => {
+      event.classList.add('date-row-recent');
+      event.classList.remove('is-tonight');
+      event.querySelector('[data-tonight]')?.setAttribute('hidden', '');
+      event.hidden = index >= 3;
+      recentList.append(event);
+    });
+
+    const remaining = currentUpcoming.length;
+    upcomingCount.textContent = `${remaining} confirmed public ${remaining === 1 ? 'date' : 'dates'} remaining`;
+    datesFallback.hidden = remaining > 0;
+    datesToggle.hidden = remaining <= 4;
+    setScheduleExpanded(false);
+  };
+
+  datesToggle.addEventListener('click', () => {
+    setScheduleExpanded(datesToggle.getAttribute('aria-expanded') !== 'true', true);
+  });
+  datesSection.refreshDates = refreshDates;
+  refreshDates();
+}
+
 const revealItems = [...document.querySelectorAll('.reveal')];
 const setupReveals = () => {
   if (prefersReducedMotion.matches || !('IntersectionObserver' in window)) {
@@ -62,7 +129,6 @@ const storyImages = [...document.querySelectorAll('[data-story-image]')];
 const storySteps = [...document.querySelectorAll('[data-story-step]')];
 const storyNumber = document.querySelector('[data-story-number]');
 const typeRiver = document.querySelector('[data-type-river]');
-const mixSection = document.querySelector('[data-mix]');
 const mediaJourney = document.querySelector('[data-media-journey]');
 const mediaViewport = document.querySelector('[data-media-viewport]');
 const mediaTrack = document.querySelector('[data-media-track]');
@@ -93,9 +159,6 @@ const updateExperience = () => {
   if (prefersReducedMotion.matches) {
     hero.style.removeProperty('--hero-scroll-y');
     typeRiver.style.removeProperty('--river-x');
-    mixSection.style.removeProperty('--mix-shift');
-    mixSection.style.removeProperty('--mix-scale');
-    mixSection.style.removeProperty('--mix-image-y');
     mediaTrack.style.removeProperty('--media-x');
     return;
   }
@@ -110,11 +173,6 @@ const updateExperience = () => {
   const riverRect = typeRiver.getBoundingClientRect();
   const riverProgress = clamp((window.innerHeight - riverRect.top) / (window.innerHeight + riverRect.height));
   typeRiver.style.setProperty('--river-x', `${-window.innerWidth * (.04 + riverProgress * .32)}px`);
-
-  const mixProgress = sectionProgress(mixSection);
-  mixSection.style.setProperty('--mix-shift', `${mixProgress * window.innerWidth * .09}px`);
-  mixSection.style.setProperty('--mix-scale', String(.86 + mixProgress * .14));
-  mixSection.style.setProperty('--mix-image-y', `${(mixProgress - .5) * -34}px`);
 
   if (!mobileLayout.matches) {
     const mediaProgress = sectionProgress(mediaJourney);

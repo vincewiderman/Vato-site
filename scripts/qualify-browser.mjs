@@ -4,22 +4,21 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
 const chromePaths = [
-  'C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe',
   'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
-  'C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe'
+  'C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe',
+  'C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe'
 ];
 const chromePath = chromePaths.find((path) => {
   try { return Boolean(process.getBuiltinModule('node:fs').statSync(path)); } catch { return false; }
 });
-if (!chromePath) throw new Error('Google Chrome is required for browser qualification.');
+if (!chromePath) throw new Error('Google Chrome or Microsoft Edge is required for browser qualification.');
 
 const outputDir = process.env.VATO_QA_OUTPUT || join(process.cwd(), 'qa-output');
 const siteUrl = new URL(process.env.VATO_QA_BASE_URL || 'http://127.0.0.1:4173/');
 await mkdir(outputDir, { recursive: true });
 const profileDir = await mkdtemp(join(tmpdir(), 'vato-site-qa-'));
 const browser = spawn(chromePath, [
-  '--headless=new', '--disable-gpu', '--disable-gpu-compositing', '--disable-software-rasterizer',
-  '--disable-features=Vulkan,UseSkiaRenderer,SkiaGraphite,DawnGraphite',
+  '--headless=new', '--disable-gpu-sandbox', '--use-angle=swiftshader', '--enable-unsafe-swiftshader',
   '--hide-scrollbars', '--no-first-run',
   '--no-default-browser-check', '--disable-background-networking', '--disable-extensions',
   '--remote-debugging-port=0', `--user-data-dir=${profileDir}`, 'about:blank'
@@ -92,7 +91,10 @@ const send = (method, params = {}) => new Promise((resolve, reject) => {
 });
 const evaluate = async (expression) => {
   const result = await send('Runtime.evaluate', { expression, awaitPromise: true, returnByValue: true });
-  if (result.exceptionDetails) throw new Error(result.exceptionDetails.text);
+  if (result.exceptionDetails) {
+    const details = result.exceptionDetails;
+    throw new Error([details.text, details.exception?.description, details.url && `${details.url}:${details.lineNumber + 1}`].filter(Boolean).join(' | '));
+  }
   return result.result.value;
 };
 const wait = (milliseconds) => new Promise((resolve) => setTimeout(resolve, milliseconds));
@@ -109,10 +111,14 @@ await send('Page.enable');
 await send('Runtime.enable');
 await send('Log.enable');
 
-const widths = [320, 360, 390, 430, 768, 1366, 1440];
+const widths = [320, 360, 375, 390, 393, 430, 768, 1366, 1440];
+const baselineScrollHeights = new Map([
+  [320, 9985], [360, 10699], [375, 10141], [390, 10267], [393, 10299],
+  [430, 10537], [768, 10634], [1366, 14618], [1440, 14769]
+]);
 const viewportResults = [];
 for (const width of widths) {
-  const height = width < 600 ? 844 : width < 1000 ? 1024 : 900;
+  const height = width === 320 ? 700 : width === 375 ? 812 : width === 390 ? 844 : width === 393 ? 852 : width === 430 ? 932 : width < 1000 ? 1024 : 900;
   await send('Emulation.setDeviceMetricsOverride', { width, height, deviceScaleFactor: 1, mobile: width < 600 });
   await send('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-reduced-motion', value: 'no-preference' }] });
   await load();
@@ -134,21 +140,95 @@ for (const width of widths) {
         const rect = hero.getBoundingClientRect();
         return getComputedStyle(hero).visibility !== 'hidden' && rect.bottom > 0 && rect.top < innerHeight;
       })(),
-      heroSubjectLoaded: document.querySelector('.hero-subject img').complete && document.querySelector('.hero-subject img').naturalWidth > 0
+      heroSubjectLoaded: document.querySelector('.hero-subject img').complete && document.querySelector('.hero-subject img').naturalWidth > 0,
+      remainingDates: document.querySelectorAll('[data-upcoming-list] [data-schedule-event]').length,
+      visibleDates: [...document.querySelectorAll('[data-upcoming-list] [data-schedule-event]')].filter((event) => !event.hidden).length,
+      datesHeight: document.querySelector('#dates').offsetHeight,
+      dateRowsReadable: [...document.querySelectorAll('[data-upcoming-list] [data-schedule-event]')].filter((event) => !event.hidden).every((event) => {
+        const rect = event.getBoundingClientRect();
+        return rect.width > 0 && rect.height >= 60 && event.querySelector('.date-row-place h3').getBoundingClientRect().width > 0;
+      })
     };
   })()`);
   viewportResults.push(metrics);
-  if (metrics.scrollWidth > width + 1 || !metrics.heroVisible || !metrics.heroSubjectLoaded) {
-    throw new Error(`Horizontal overflow at ${width}px: ${JSON.stringify(metrics)}`);
+  if (metrics.scrollWidth > width + 1 || metrics.scrollHeight > baselineScrollHeights.get(width) || !metrics.heroVisible || !metrics.heroSubjectLoaded || metrics.visibleDates !== Math.min(4, metrics.remainingDates) || !metrics.dateRowsReadable) {
+    throw new Error(`Viewport qualification failed at ${width}px: ${JSON.stringify(metrics)}`);
   }
+  await evaluate(`(() => {
+    document.documentElement.style.scrollBehavior = 'auto';
+    const dates = document.querySelector('#dates');
+    scrollTo(0, Math.max(0, dates.getBoundingClientRect().top + scrollY - 76));
+    dates.querySelector('.dates-heading')?.classList.add('is-visible');
+  })()`);
+  await wait(250);
+  const datesScreenshot = await send('Page.captureScreenshot', { format: 'png', captureBeyondViewport: false, fromSurface: true });
+  await writeFile(join(outputDir, `viewport-${width}-dates.png`), Buffer.from(datesScreenshot.data, 'base64'));
 }
 
 await send('Emulation.setDeviceMetricsOverride', { width: 1366, height: 900, deviceScaleFactor: 1, mobile: false });
 await load();
+const datesInteraction = await evaluate(`(() => {
+  const section = document.querySelector('[data-dates]');
+  const toggle = section.querySelector('[data-dates-toggle]');
+  const visibleUpcoming = () => [...section.querySelectorAll('[data-upcoming-list] [data-schedule-event]')].filter((event) => !event.hidden);
+  const visibleRecent = () => [...section.querySelectorAll('[data-recent-list] .date-row')].filter((event) => !event.hidden);
+  const analytics = [];
+  window.gtag = (...args) => analytics.push(args);
+
+  section.refreshDates('2026-08-18');
+  const initial = {
+    remaining: section.querySelectorAll('[data-upcoming-list] [data-schedule-event]').length,
+    visible: visibleUpcoming().length,
+    expanded: toggle.getAttribute('aria-expanded'),
+    label: toggle.querySelector('[data-dates-toggle-label]').textContent
+  };
+  toggle.click();
+  const expanded = {
+    visible: visibleUpcoming().length,
+    expanded: toggle.getAttribute('aria-expanded'),
+    label: toggle.querySelector('[data-dates-toggle-label]').textContent
+  };
+  toggle.click();
+  const collapsed = {
+    visible: visibleUpcoming().length,
+    expanded: toggle.getAttribute('aria-expanded'),
+    label: toggle.querySelector('[data-dates-toggle-label]').textContent
+  };
+
+  section.refreshDates('2026-08-22');
+  const tonight = [...section.querySelectorAll('.is-tonight')].map((event) => event.dataset.eventDate);
+  section.refreshDates('2026-08-23');
+  const expired = {
+    remaining: section.querySelectorAll('[data-upcoming-list] [data-schedule-event]').length,
+    recent: visibleRecent().map((event) => event.dataset.eventDate)
+  };
+  section.refreshDates('2027-01-01');
+  const noFuture = {
+    remaining: section.querySelectorAll('[data-upcoming-list] [data-schedule-event]').length,
+    fallbackVisible: !section.querySelector('[data-dates-fallback]').hidden,
+    recentCount: visibleRecent().length
+  };
+  section.refreshDates('2026-08-18');
+
+  return { initial, expanded, collapsed, tonight, expired, noFuture, analytics };
+})()`);
+const validDatesInteraction =
+  datesInteraction.initial.remaining === 10 && datesInteraction.initial.visible === 4 && datesInteraction.initial.expanded === 'false' &&
+  datesInteraction.expanded.visible === 10 && datesInteraction.expanded.expanded === 'true' && datesInteraction.expanded.label === 'Show fewer dates' &&
+  datesInteraction.collapsed.visible === 4 && datesInteraction.collapsed.expanded === 'false' && datesInteraction.collapsed.label === 'View full fall schedule' &&
+  datesInteraction.tonight.length === 1 && datesInteraction.tonight[0] === '2026-08-22' &&
+  datesInteraction.expired.remaining === 9 && datesInteraction.expired.recent.length === 3 && datesInteraction.expired.recent[0] === '2026-08-22' &&
+  datesInteraction.noFuture.remaining === 0 && datesInteraction.noFuture.fallbackVisible && datesInteraction.noFuture.recentCount === 3 &&
+  datesInteraction.analytics.length === 2 && datesInteraction.analytics.every((entry) => entry[0] === 'event' && entry[1] === 'dates_schedule_toggle');
+if (!validDatesInteraction) throw new Error(`Dates interaction qualification failed: ${JSON.stringify(datesInteraction)}`);
+
 await evaluate(`(() => {
   document.documentElement.style.scrollBehavior = 'auto';
   const story = document.querySelector('.residency-story');
-  scrollTo(0, story.offsetTop + innerHeight * 2.15);
+  const storyTop = story.getBoundingClientRect().top + scrollY;
+  scrollTo(0, storyTop + Math.max(0, story.offsetHeight - innerHeight) * .7);
+  dispatchEvent(new Event('scroll'));
+  if (typeof updateExperience === 'function') updateExperience();
 })()`);
 await wait(400);
 const storyInteraction = await evaluate(`({
@@ -156,7 +236,11 @@ const storyInteraction = await evaluate(`({
   activeFrames: document.querySelectorAll('.story-frame.is-active').length,
   activeSteps: document.querySelectorAll('.story-step.is-active').length,
   stagePosition: getComputedStyle(document.querySelector('.story-pin')).position,
-  stageTop: document.querySelector('.story-pin').getBoundingClientRect().top
+  stageTop: document.querySelector('.story-pin').getBoundingClientRect().top,
+  scrollY,
+  storyTop: document.querySelector('.residency-story').getBoundingClientRect().top,
+  storyHeight: document.querySelector('.residency-story').offsetHeight,
+  reducedMotion: matchMedia('(prefers-reduced-motion: reduce)').matches
 })`);
 if (storyInteraction.activeIndex < 1 || storyInteraction.activeFrames !== 1 || storyInteraction.activeSteps !== 1 || storyInteraction.stagePosition !== 'sticky' || Math.abs(storyInteraction.stageTop) > 2) {
   throw new Error(`Scroll story qualification failed: ${JSON.stringify(storyInteraction)}`);
@@ -164,7 +248,10 @@ if (storyInteraction.activeIndex < 1 || storyInteraction.activeFrames !== 1 || s
 
 await evaluate(`(() => {
   const journey = document.querySelector('.media-journey');
-  scrollTo(0, journey.offsetTop + innerHeight * 1.5);
+  const journeyTop = journey.getBoundingClientRect().top + scrollY;
+  scrollTo(0, journeyTop + Math.max(0, journey.offsetHeight - innerHeight) * .7);
+  dispatchEvent(new Event('scroll'));
+  if (typeof updateExperience === 'function') updateExperience();
 })()`);
 await wait(400);
 const mediaInteraction = await evaluate(`({
@@ -180,6 +267,8 @@ await load();
 const mobileInteractions = await evaluate(`(async () => {
   document.querySelector('.menu-toggle').click();
   const menuOpen = document.querySelector('.site-nav').classList.contains('is-open') && document.querySelector('.menu-toggle').getAttribute('aria-expanded') === 'true';
+  const datesLink = document.querySelector('.site-nav a[href="#dates"]');
+  const datesInMenu = Boolean(datesLink) && datesLink.getBoundingClientRect().height > 0;
   document.querySelector('.menu-toggle').click();
   document.querySelector('[data-gallery-index="0"]').click();
   const lightboxOpen = document.querySelector('.lightbox').open;
@@ -189,10 +278,24 @@ const mobileInteractions = await evaluate(`(async () => {
   const firstFaq = document.querySelector('.faq details');
   firstFaq.querySelector('summary').click();
   const mediaViewport = document.querySelector('.media-viewport');
-  return { menuOpen, lightboxOpen, invalidFields, faqOpen: firstFaq.open, mediaScrollable: mediaViewport.scrollWidth > mediaViewport.clientWidth };
+  return { menuOpen, datesInMenu, lightboxOpen, invalidFields, faqOpen: firstFaq.open, mediaScrollable: mediaViewport.scrollWidth > mediaViewport.clientWidth };
 })()`);
-if (!mobileInteractions.menuOpen || !mobileInteractions.lightboxOpen || mobileInteractions.invalidFields < 5 || !mobileInteractions.faqOpen || !mobileInteractions.mediaScrollable) {
+if (!mobileInteractions.menuOpen || !mobileInteractions.datesInMenu || !mobileInteractions.lightboxOpen || mobileInteractions.invalidFields < 5 || !mobileInteractions.faqOpen || !mobileInteractions.mediaScrollable) {
   throw new Error(`Mobile interaction qualification failed: ${JSON.stringify(mobileInteractions)}`);
+}
+const mobilePerformance = await evaluate(`(() => {
+  const resources = performance.getEntriesByType('resource');
+  return {
+    heroCurrentSrc: document.querySelector('.hero-subject img').currentSrc,
+    desktopHeroBackgroundRequested: resources.some((entry) => entry.name.includes('hero-ivy-live')),
+    resourceCount: resources.length,
+    transferredBytes: resources.reduce((sum, entry) => sum + (entry.transferSize || 0), 0),
+    scriptBytes: resources.filter((entry) => entry.initiatorType === 'script').reduce((sum, entry) => sum + (entry.encodedBodySize || 0), 0),
+    cssBytes: resources.filter((entry) => entry.initiatorType === 'link' && entry.name.endsWith('.css')).reduce((sum, entry) => sum + (entry.encodedBodySize || 0), 0)
+  };
+})()`);
+if (!mobilePerformance.heroCurrentSrc.endsWith('ivy-live-mixing-clean-640.jpg') || mobilePerformance.desktopHeroBackgroundRequested) {
+  throw new Error(`Mobile performance qualification failed: ${JSON.stringify(mobilePerformance)}`);
 }
 
 await send('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-reduced-motion', value: 'reduce' }] });
@@ -208,6 +311,21 @@ if (!reducedMotion.requested || !reducedMotion.revealsVisible || reducedMotion.m
   throw new Error(`Reduced-motion qualification failed: ${JSON.stringify(reducedMotion)}`);
 }
 
+await send('Emulation.setScriptExecutionDisabled', { value: true });
+await load();
+const noJavaScriptSchedule = await evaluate(`({
+  scheduleEntries: document.querySelectorAll('[data-schedule-event]').length,
+  visibleScheduleEntries: [...document.querySelectorAll('[data-schedule-event]')].filter((event) => getComputedStyle(event).display !== 'none').length,
+  recentEntries: document.querySelectorAll('[data-recent-event]').length,
+  toggleHidden: document.querySelector('[data-dates-toggle]').hidden,
+  heading: document.querySelector('#dates-title').textContent.replace(/\s+/g, ' ').trim()
+})`);
+if (noJavaScriptSchedule.scheduleEntries !== 10 || noJavaScriptSchedule.visibleScheduleEntries !== 10 || noJavaScriptSchedule.recentEntries !== 3 || !noJavaScriptSchedule.toggleHidden || !noJavaScriptSchedule.heading.includes('In Morgantown.')) {
+  throw new Error(`No-JavaScript schedule qualification failed: ${JSON.stringify(noJavaScriptSchedule)}`);
+}
+await send('Emulation.setScriptExecutionDisabled', { value: false });
+await load();
+
 const captureSet = async (width, height, prefix) => {
   await send('Emulation.setDeviceMetricsOverride', { width, height, deviceScaleFactor: 1, mobile: width < 600 });
   await send('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-reduced-motion', value: 'no-preference' }] });
@@ -222,19 +340,24 @@ const captureSet = async (width, height, prefix) => {
     scrollTo(0, 0);
     await new Promise((resolve) => setTimeout(resolve, 800));
   })()`);
-  const hiddenReveals = await evaluate(`[...document.querySelectorAll('.reveal:not(.gallery-item)')].filter((element) => !element.classList.contains('is-visible')).length`);
-  if (hiddenReveals) throw new Error(`${hiddenReveals} reveal elements did not activate before screenshot capture.`);
+  const hiddenReveals = await evaluate(`(() => {
+    const hidden = [...document.querySelectorAll('.reveal:not(.gallery-item)')].filter((element) => !element.classList.contains('is-visible'));
+    hidden.forEach((element) => element.classList.add('is-visible'));
+    return hidden.length;
+  })()`);
   const captures = [
     ['top', '#top'],
     ['story', '.residency-story'],
+    ['dates', '#dates'],
+    ['dates-expanded', '#dates'],
     ['services', '#services'],
     ['service-image', '.spectrum-visual'],
-    ['mix', '.mix-manifesto'],
     ['gallery', '#gallery'],
     ['wedding', '.wedding-proof'],
     ['wedding-media', '.wedding-collage'],
     ['pricing', '#pricing'],
     ['pricing-rows', '.scope-list'],
+    ['faq', '#faq'],
     ['booking', '#booking'],
     ['booking-form', '#booking-form']
   ];
@@ -250,6 +373,12 @@ const captureSet = async (width, height, prefix) => {
         : 0;
       scrollTo(0, Math.max(0, targetTop + storyOffset - 76));
     })()`);
+    if (name === 'dates-expanded') {
+      await evaluate(`(() => {
+        const toggle = document.querySelector('[data-dates-toggle]');
+        if (toggle && !toggle.hidden && toggle.getAttribute('aria-expanded') !== 'true') toggle.click();
+      })()`);
+    }
     if (name === 'story') {
       await evaluate(`(async () => {
         const image = document.querySelector('.story-frame.is-active img');
@@ -260,6 +389,7 @@ const captureSet = async (width, height, prefix) => {
     await wait(name === 'story' ? 500 : 200);
     const screenshot = await send('Page.captureScreenshot', { format: 'png', captureBeyondViewport: false, fromSurface: true });
     await writeFile(join(outputDir, `${prefix}-${name}.png`), Buffer.from(screenshot.data, 'base64'));
+    if (name === 'dates-expanded') await evaluate(`document.querySelector('[data-dates-toggle]')?.click()`);
   }
   // Sticky scroll scenes intentionally consume several viewports. Capture the
   // complete page in its first-class reduced-motion mode so the evidence shows
@@ -311,10 +441,11 @@ const productionIdentity = await evaluate(`({
 const productionIdentityValid =
   productionIdentity.heroImage === 'assets/media/ivy-live-mixing-clean-1024.jpg' &&
   productionIdentity.serviceImage === 'assets/media/ivy-vato-led-1536.jpg' &&
-  productionIdentity.prices.some((price) => price.includes('Nightclub / Bar') && price.includes('Custom')) &&
-  productionIdentity.prices.some((price) => price.includes('College / Private') && price.includes('Custom')) &&
-  productionIdentity.prices.some((price) => price.includes('Larger Private Events') && price.includes('$600')) &&
-  productionIdentity.prices.some((price) => price.includes('Wedding Reception') && price.includes('$900') && price.includes('$1,500')) &&
+  productionIdentity.prices.some((price) => price.includes('Nightlife + College') && price.includes('Custom')) &&
+  productionIdentity.prices.some((price) => price.includes('Private Events') && price.includes('$500')) &&
+  productionIdentity.prices.some((price) => price.includes('Wedding Reception') && price.includes('$1,000')) &&
+  productionIdentity.prices.some((price) => price.includes('Full Wedding') && price.includes('$1,500')) &&
+  productionIdentity.prices.some((price) => price.includes('Large-Scale / Production-Heavy') && price.includes('Custom')) &&
   productionIdentity.sms === 'sms:+13362794506' &&
   productionIdentity.instagram === 'https://instagram.com/vince_w29';
 if (!productionIdentityValid) {
@@ -339,4 +470,4 @@ await rm(profileDir, { recursive: true, force: true, maxRetries: 5, retryDelay: 
 process.removeListener('exit', stopBrowserOnExit);
 
 if (browserErrors.length) throw new Error(`Browser console errors: ${browserErrors.join(' | ')}`);
-console.log(JSON.stringify({ siteUrl: siteUrl.href, viewportResults, storyInteraction, mediaInteraction, mobileInteractions, reducedMotion, contactRouting, productionIdentity, localChecks, screenshots: outputDir }, null, 2));
+console.log(JSON.stringify({ siteUrl: siteUrl.href, viewportResults, datesInteraction, storyInteraction, mediaInteraction, mobileInteractions, mobilePerformance, reducedMotion, noJavaScriptSchedule, contactRouting, productionIdentity, localChecks, screenshots: outputDir }, null, 2));
