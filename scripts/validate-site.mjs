@@ -31,8 +31,10 @@ const scheduleEvents = [...html.matchAll(/<article class="date-row" data-schedul
   .map(([, date, markup]) => ({ date, markup }));
 const expectedDates = [
   '2026-08-22', '2026-08-28', '2026-08-29', '2026-09-06', '2026-09-18',
-  '2026-10-01', '2026-10-22', '2026-11-06', '2026-11-12', '2026-12-10'
+  '2026-10-01', '2026-10-02', '2026-10-03', '2026-10-10', '2026-10-17', '2026-10-22', '2026-10-23',
+  '2026-10-28', '2026-10-30', '2026-10-31', '2026-11-06', '2026-11-12', '2026-12-10'
 ];
+const publicVenues = ['Ivy Nightclub', "Joe Mama's", '123 Pleasant Street', 'Yellow Banana'];
 const scheduleMarkup = scheduleEvents.map(({ markup }) => markup).join('\n');
 const scheduleVenues = scheduleEvents.map(({ markup }) => markup.match(/<h3>([^<]+)<\/h3>/)?.[1]);
 
@@ -45,8 +47,8 @@ const checks = [
   [html.includes('Wedding Reception') && html.includes('Starting at</sup>$1,000'), 'Wedding receptions must start at $1,000.'],
   [html.includes('Full Wedding') && html.includes('Starting at</sup>$1,500'), 'Full weddings must start at $1,500.'],
   [html.includes('Large-Scale / Production-Heavy'), 'Large-scale production-heavy events must be custom quoted.'],
-  [JSON.stringify(scheduleEvents.map(({ date }) => date)) === JSON.stringify(expectedDates), 'The verified fall schedule must contain exactly ten chronologically ordered dates.'],
-  [scheduleVenues.every((venue) => venue === 'Ivy Nightclub' || venue === "Joe Mama's"), 'Only Ivy Nightclub and Joe Mama\'s may appear in the public schedule.'],
+  [JSON.stringify(scheduleEvents.map(({ date }) => date)) === JSON.stringify(expectedDates), 'The verified fall schedule must contain exactly the confirmed dates, in chronological order.'],
+  [scheduleVenues.every((venue) => publicVenues.includes(venue)), `Only ${publicVenues.join(', ')} may appear in the public schedule.`],
   [!scheduleMarkup.match(/Dick(?:'|&rsquo;)s Sporting Goods|private/i), 'Unconfirmed or private bookings must not appear in the public schedule.'],
   [html.includes('href="#dates">Dates</a>') && html.includes('aria-controls="dates-upcoming-list"') && html.includes('aria-expanded="false"'), 'Accessible Dates navigation and schedule controls are required.'],
   [html.includes('New public dates will be posted here as they are confirmed.'), 'The no-future-dates fallback is missing.'],
