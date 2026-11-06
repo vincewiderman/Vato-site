@@ -49,7 +49,8 @@ test('publishes exactly the verified public dates in chronological order', () =>
   assert.equal((scheduleMarkup.match(/123 Pleasant Street|Yellow Banana/g) || []).length, 2);
   assert.doesNotMatch(scheduleMarkup, /Dick(?:'|&rsquo;)s Sporting Goods/i);
   assert.doesNotMatch(scheduleMarkup, /private/i);
-  assert.doesNotMatch(scheduleMarkup, /\b(?:[01]?\d|2[0-3]):[0-5]\d\b|\b(?:a\.?m\.?|p\.?m\.?)\b/i);
+  const timed = scheduleEvents.filter(({ markup }) => /\b(?:[01]?\d|2[0-3]):[0-5]\d\b|\b(?:a\.?m\.?|p\.?m\.?)\b/i.test(markup));
+  assert.deepEqual(timed.map(({ date }) => date), ['2026-11-07', '2026-11-08']);   // only the times Vince gave (11-06)
 });
 
 test('progressively enhances the schedule without hiding dates from source HTML', () => {
