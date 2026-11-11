@@ -340,3 +340,70 @@ if (parameters.get('submitted') === '1') {
   formNotice.hidden = false;
   history.replaceState({}, '', `${window.location.pathname}#booking`);
 }
+
+// 11-11 upgrade: the silent room video behind the hero. It never loads for reduced motion or data saver, and the
+// still photo stays until the video is actually playing.
+const heroVideo = document.querySelector('[data-hero-video]');
+if (heroVideo && hero && !prefersReducedMotion.matches && !(navigator.connection && navigator.connection.saveData)) {
+  const narrowHero = window.matchMedia('(max-width: 820px)').matches;
+  const wideHero = window.innerWidth * (window.devicePixelRatio || 1) > 1700;
+  heroVideo.poster = narrowHero ? heroVideo.dataset.posterMobile : heroVideo.dataset.poster;
+  heroVideo.src = narrowHero ? heroVideo.dataset.srcMobile : (wideHero ? heroVideo.dataset.srcWide : heroVideo.dataset.src);
+  heroVideo.addEventListener('playing', () => { hero.dataset.videoReady = 'true'; }, { once: true });
+  const playHero = () => heroVideo.play().catch(() => {});
+  playHero();
+  document.addEventListener('visibilitychange', () => { if (document.hidden) heroVideo.pause(); else playHero(); });
+}
+
+// The Video section: each reel loads only when it comes into view, plays muted while on screen, and a tap toggles it.
+const reels = [...document.querySelectorAll('[data-reel]')];
+const setReelPlaying = (video, playing) => {
+  const figure = video.closest('.reel');
+  if (playing) {
+    if (!video.src) video.src = video.dataset.src;
+    video.play().then(() => figure.classList.add('is-playing')).catch(() => figure.classList.remove('is-playing'));
+  } else {
+    video.pause();
+    figure.classList.remove('is-playing');
+  }
+};
+reels.forEach((video) => {
+  video.closest('.reel-frame').addEventListener('click', () => {
+    video.dataset.userPaused = video.paused ? '' : '1';
+    setReelPlaying(video, video.paused);
+    track('reel_toggle', { reel: video.dataset.src });
+  });
+});
+if (reels.length && !prefersReducedMotion.matches && 'IntersectionObserver' in window) {
+  const reelObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      const video = entry.target;
+      if (entry.isIntersecting && entry.intersectionRatio >= 0.55 && !video.dataset.userPaused) setReelPlaying(video, true);
+      else if (!entry.isIntersecting || entry.intersectionRatio < 0.2) setReelPlaying(video, false);
+    });
+  }, { threshold: [0, 0.2, 0.55, 0.9] });
+  reels.forEach((video) => reelObserver.observe(video));
+}
+
+// Search engines: each upcoming public date as an Event, built from the same schedule rows people see.
+const eventRows = [...document.querySelectorAll('[data-schedule-event]')];
+const todayIso = new Date().toISOString().slice(0, 10);
+const eventData = eventRows
+  .filter((row) => row.dataset.eventDate >= todayIso)
+  .map((row) => ({
+    '@type': 'Event',
+    name: `VATO at ${row.querySelector('h3')?.textContent.trim()}`,
+    startDate: row.dataset.eventDate,
+    eventStatus: 'https://schema.org/EventScheduled',
+    eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+    location: { '@type': 'Place', name: row.querySelector('h3')?.textContent.trim(), address: { '@type': 'PostalAddress', addressLocality: 'Morgantown', addressRegion: 'WV', addressCountry: 'US' } },
+    performer: { '@type': 'Person', name: 'Vince Widerman', alternateName: 'VATO' },
+    organizer: { '@type': 'Organization', name: row.querySelector('h3')?.textContent.trim() },
+    url: 'https://djvato.com/#dates'
+  }));
+if (eventData.length) {
+  const ld = document.createElement('script');
+  ld.type = 'application/ld+json';
+  ld.textContent = JSON.stringify({ '@context': 'https://schema.org', '@graph': eventData });
+  document.head.appendChild(ld);
+}
