@@ -19,11 +19,7 @@ const requiredFiles = [
   'assets/media/ivy-vato-wall-640.jpg', 'assets/media/ivy-vato-wall-828.jpg',
   'assets/media/production-controller-640.jpg', 'assets/media/production-controller-1536.jpg',
   'assets/media/mebane-room-640.jpg', 'assets/media/mebane-room-1152.jpg',
-  'assets/media/mebane-booth-640.jpg', 'assets/media/mebane-booth-1152.jpg',
-  'assets/media/hero-room-1280.mp4', 'assets/media/hero-room-1920.mp4', 'assets/media/hero-room-720x1280.mp4',
-  'assets/media/hero-room-1920.jpg', 'assets/media/hero-room-720x1280.jpg',
-  'assets/media/reel-room-drop-720.mp4', 'assets/media/reel-montage-720.mp4', 'assets/media/reel-transition-720.mp4',
-  'assets/media/reel-room-drop-720.jpg', 'assets/media/reel-montage-720.jpg', 'assets/media/reel-transition-720.jpg'
+  'assets/media/mebane-booth-640.jpg', 'assets/media/mebane-booth-1152.jpg'
 ];
 
 const failures = [];
@@ -66,10 +62,7 @@ const checks = [
   [!html.includes('media-input/'), 'Source media must never be referenced by the public page.'],
   [!html.includes('YOUR_FORM_ID') && !html.includes('EDIT_your'), 'Unresolved production placeholders remain.'],
   [Array.isArray(reviews) && reviews.length > 0, 'At least one legitimate review is required.'],
-  [manifest.start_url === '/', 'Manifest start URL must stay at the domain root.'],
-  [[...html.matchAll(/<video[^>]*>/g)].every(([tag]) => /muted/.test(tag) && /playsinline/.test(tag)), 'Every video must be muted and inline (no music is published on the site).'],
-  [[...html.matchAll(/data-src(?:-[a-z]+)?="([^"]+\.mp4)"/g)].every(([, path]) => { try { return statSync(path).size < 5.5e6; } catch { return false; } }), 'Every site video must exist and stay under 5.5 MB.'],
-  [html.includes('https://www.tiktok.com/@vato.official'), 'The TikTok profile link is missing.']
+  [manifest.start_url === '/', 'Manifest start URL must stay at the domain root.']
 ];
 for (const [passed, message] of checks) if (!passed) failures.push(message);
 

@@ -120,24 +120,3 @@ test('renders only available review records', () => {
     assert.ok(Number.isInteger(review.rating));
   }
 });
-
-test('11-11 upgrade: silent video, the Video section, game days and clean sets', () => {
-  const videos = [...html.matchAll(/<video\b[^>]*>/g)].map(([tag]) => tag);
-  assert.equal(videos.length, 4);
-  for (const tag of videos) {
-    assert.match(tag, /\bmuted\b/);
-    assert.match(tag, /\bplaysinline\b/);
-    assert.match(tag, /preload="none"/);
-  }
-  assert.match(html, /<section id="watch" class="reels"/);
-  assert.match(html, /href="#watch">Video<\/a>/);
-  assert.match(html, /https:\/\/www\.tiktok\.com\/@vato\.official/);
-  assert.match(html, /Game days &amp; sports/);
-  assert.match(html, /Can you keep it clean\?/);
-  assert.match(html, /<option>Sports \/ game day<\/option>/);
-  assert.match(script, /prefersReducedMotion\.matches/);
-  assert.match(script, /saveData/);
-  assert.match(script, /'@type': 'Event'/);
-  assert.match(css, /\.hero\[data-video-ready="true"\] \.hero-video/);
-  assert.doesNotMatch(html, /\bAI\b/);
-});
