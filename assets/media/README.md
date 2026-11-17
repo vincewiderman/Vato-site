@@ -24,4 +24,4 @@ The current site uses high-quality JPEG derivatives at two responsive widths. Th
 | `mebane-room-*` | `3545DE17-6A6B-4A53-A36D-8BF835AF29F4.jpeg` | Wedding case study; room, speakers, and booth |
 | `mebane-booth-*` | `CBD4B826-FD6A-426E-8DC8-32AAE539C186.jpeg` | Wedding case study; booth-to-reception perspective |
 
-All selected originals passed the full-resolution vape/e-cigarette review, so no vape cleanup was needed. The hero uses a separate AI-edited derivative that removes only three distracting background bystanders; the original remains unchanged. The complete 29-image assessment is retained locally in `media-input/media-assessment-2026-08-07.md`.
+All selected originals passed the full-resolution vape/e-cigarette review, so no vape cleanup was needed. The `ivy-live-mixing-clean-*` derivative is retouched to remove only three distracting background bystanders; the original remains unchanged. The complete 29-image assessment is retained locally in `media-input/media-assessment-2026-08-07.md`.

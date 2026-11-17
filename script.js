@@ -1,7 +1,7 @@
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
-const mobileLayout = window.matchMedia('(max-width: 820px)');
-const clamp = (value, minimum = 0, maximum = 1) => Math.min(maximum, Math.max(minimum, value));
+const wideHero = window.matchMedia('(min-width: 900px) and (orientation: landscape)');
+const mobileLayout = window.matchMedia('(max-width: 899px)');
+const saveData = Boolean(navigator.connection && navigator.connection.saveData);
 
 const track = (eventName, parameters = {}) => {
   if (typeof window.gtag === 'function') window.gtag('event', eventName, parameters);
@@ -9,9 +9,11 @@ const track = (eventName, parameters = {}) => {
 
 document.querySelector('[data-year]').textContent = new Date().getFullYear();
 
+/* ---------- Header + menu ---------- */
 const header = document.querySelector('[data-header]');
-const syncHeader = () => header.classList.toggle('is-scrolled', window.scrollY > 18);
+const syncHeader = () => header.classList.toggle('is-scrolled', window.scrollY > 24);
 syncHeader();
+window.addEventListener('scroll', syncHeader, { passive: true });
 
 const menuButton = document.querySelector('.menu-toggle');
 const navigation = document.querySelector('.site-nav');
@@ -21,7 +23,6 @@ const setMenu = (open) => {
   navigation.classList.toggle('is-open', open);
   document.body.classList.toggle('menu-open', open);
 };
-
 menuButton.addEventListener('click', () => setMenu(menuButton.getAttribute('aria-expanded') !== 'true'));
 navigation.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => setMenu(false)));
 document.addEventListener('keydown', (event) => {
@@ -38,6 +39,7 @@ document.querySelectorAll('[data-track]').forEach((element) => {
   element.addEventListener('click', () => track('booking_cta_click', { placement: element.dataset.track }));
 });
 
+/* ---------- Dates: past dates move to "Recently played", today gets "Tonight" ---------- */
 const datesSection = document.querySelector('[data-dates]');
 if (datesSection) {
   const upcomingList = datesSection.querySelector('[data-upcoming-list]');
@@ -96,6 +98,7 @@ if (datesSection) {
     datesFallback.hidden = remaining > 0;
     datesToggle.hidden = remaining <= 4;
     setScheduleExpanded(false);
+    updateHeroNext(currentUpcoming[0], todayKey);
   };
 
   datesToggle.addEventListener('click', () => {
@@ -105,131 +108,113 @@ if (datesSection) {
   refreshDates();
 }
 
+/* The hero's "Next" line reads the first upcoming date row, so it never needs its own update. */
+function updateHeroNext(event, todayKey) {
+  const next = document.querySelector('[data-hero-next]');
+  if (!next) return;
+  if (!event) { next.hidden = true; return; }
+  const day = event.querySelector('time span')?.textContent.trim() || '';
+  const date = event.querySelector('time strong')?.textContent.trim() || '';
+  const venue = event.querySelector('.date-row-place h3')?.textContent.trim() || '';
+  const note = event.querySelector('.date-row-note')?.textContent || '';
+  const time = note.includes('·') ? note.split('·').pop().trim() : '';
+  const tonight = event.dataset.eventDate === todayKey;
+  next.querySelector('[data-hero-next-label]').textContent = tonight ? 'Tonight' : 'Next';
+  next.querySelector('[data-hero-next-text]').textContent = [tonight ? '' : `${day} ${date}`, venue, time].filter(Boolean).join(' · ');
+  next.classList.toggle('is-tonight', tonight);
+  next.hidden = false;
+}
+
+/* ---------- Reveal on scroll ---------- */
 const revealItems = [...document.querySelectorAll('.reveal')];
-const setupReveals = () => {
-  if (prefersReducedMotion.matches || !('IntersectionObserver' in window)) {
-    revealItems.forEach((item) => item.classList.add('is-visible'));
-    return;
-  }
+if (prefersReducedMotion.matches || !('IntersectionObserver' in window)) {
+  revealItems.forEach((item) => item.classList.add('is-visible'));
+} else {
+  document.documentElement.classList.add('has-reveal');
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (!entry.isIntersecting) return;
       entry.target.classList.add('is-visible');
       observer.unobserve(entry.target);
     });
-  }, { threshold: 0.1, rootMargin: '0px 0px -4% 0px' });
+  }, { threshold: 0.08, rootMargin: '0px 0px -4% 0px' });
   revealItems.forEach((item) => observer.observe(item));
-};
-setupReveals();
+}
 
-const hero = document.querySelector('[data-hero]');
-const story = document.querySelector('[data-story]');
-const storyStage = document.querySelector('[data-story-stage]');
-const storyImages = [...document.querySelectorAll('[data-story-image]')];
-const storySteps = [...document.querySelectorAll('[data-story-step]')];
-const storyNumber = document.querySelector('[data-story-number]');
-const typeRiver = document.querySelector('[data-type-river]');
-const mediaJourney = document.querySelector('[data-media-journey]');
-const mediaViewport = document.querySelector('[data-media-viewport]');
-const mediaTrack = document.querySelector('[data-media-track]');
-let activeStoryIndex = 0;
-let scrollFrame = 0;
+/* ---------- The one silent background clip ----------
+   A muted MP4 with no audio track. It never autoplays under reduced motion or Save-Data, loads only when the
+   hero is on screen, pauses when it is not, and the poster photo stays until the clip is actually playing. */
+const motionAllowed = () => !prefersReducedMotion.matches && !saveData;
 
-const setStoryIndex = (index) => {
-  if (index === activeStoryIndex && story.dataset.active !== undefined) return;
-  activeStoryIndex = index;
-  story.dataset.active = String(index);
-  storyStage.dataset.active = String(index);
-  story.style.setProperty('--story-index', String(index));
-  storyImages.forEach((image, imageIndex) => image.classList.toggle('is-active', imageIndex === index));
-  storySteps.forEach((step, stepIndex) => step.classList.toggle('is-active', stepIndex === index));
-  storyNumber.textContent = String(index + 1).padStart(2, '0');
+const heroSection = document.querySelector('[data-hero]');
+const heroVideo = document.querySelector('[data-hero-video]');
+const motionToggle = document.querySelector('[data-motion-toggle]');
+const motionLabel = document.querySelector('[data-motion-label]');
+let userPaused = false;
+let heroVisible = true;
+
+const tryPlay = (video) => {
+  video.muted = true;
+  const attempt = video.play();
+  if (attempt && typeof attempt.catch === 'function') attempt.catch(() => {});
 };
 
-const sectionProgress = (element) => {
-  const rect = element.getBoundingClientRect();
-  const distance = Math.max(1, rect.height - window.innerHeight);
-  return clamp(-rect.top / distance);
+const syncToggle = () => {
+  if (!motionToggle) return;
+  motionToggle.hidden = !motionAllowed();
+  motionToggle.setAttribute('aria-pressed', String(userPaused));
+  motionToggle.classList.toggle('is-paused', userPaused);
+  motionLabel.textContent = userPaused ? 'Play background video' : 'Pause background video';
 };
 
-const updateExperience = () => {
-  scrollFrame = 0;
-  syncHeader();
-
-  if (prefersReducedMotion.matches) {
-    hero.style.removeProperty('--hero-scroll-y');
-    typeRiver.style.removeProperty('--river-x');
-    mediaTrack.style.removeProperty('--media-x');
-    return;
-  }
-
-  const heroProgress = clamp(window.scrollY / Math.max(1, hero.offsetHeight));
-  hero.style.setProperty('--hero-scroll-y', `${heroProgress * 46}px`);
-  hero.style.setProperty('--hero-word-y', `${heroProgress * -34}px`);
-
-  const storyProgress = sectionProgress(story);
-  setStoryIndex(Math.min(storySteps.length - 1, Math.floor(storyProgress * storySteps.length)));
-
-  const riverRect = typeRiver.getBoundingClientRect();
-  const riverProgress = clamp((window.innerHeight - riverRect.top) / (window.innerHeight + riverRect.height));
-  typeRiver.style.setProperty('--river-x', `${-window.innerWidth * (.04 + riverProgress * .32)}px`);
-
-  if (!mobileLayout.matches) {
-    const mediaProgress = sectionProgress(mediaJourney);
-    const maximumShift = Math.max(0, mediaTrack.scrollWidth - mediaViewport.clientWidth + window.innerWidth * .04);
-    mediaTrack.style.setProperty('--media-x', `${-maximumShift * mediaProgress}px`);
-    mediaJourney.style.setProperty('--media-progress', `${mediaProgress * 100}%`);
+const syncVideo = () => {
+  if (!heroVideo) return;
+  if (motionAllowed() && !userPaused && heroVisible) {
+    const src = wideHero.matches ? heroVideo.dataset.srcWide : heroVideo.dataset.srcTall;
+    if (heroVideo.dataset.loaded !== src) {
+      heroVideo.dataset.loaded = src;
+      heroVideo.src = src;
+      heroVideo.load();
+    }
+    tryPlay(heroVideo);
   } else {
-    mediaTrack.style.removeProperty('--media-x');
+    heroVideo.pause();
   }
+  syncToggle();
 };
 
-const requestExperienceUpdate = () => {
-  if (!scrollFrame) scrollFrame = requestAnimationFrame(updateExperience);
-};
-window.addEventListener('scroll', requestExperienceUpdate, { passive: true });
-window.addEventListener('resize', requestExperienceUpdate, { passive: true });
-prefersReducedMotion.addEventListener('change', requestExperienceUpdate);
-mobileLayout.addEventListener('change', requestExperienceUpdate);
-setStoryIndex(0);
-updateExperience();
+if (heroVideo) {
+  heroVideo.addEventListener('playing', () => heroSection.classList.add('is-playing'));
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(([entry]) => {
+      heroVisible = entry.isIntersecting;
+      syncVideo();
+    }).observe(heroSection);
+  }
+  motionToggle?.addEventListener('click', () => {
+    userPaused = !userPaused;
+    syncVideo();
+    track('background_video_toggle', { paused: userPaused });
+  });
+  document.addEventListener('visibilitychange', () => (document.hidden ? heroVideo.pause() : syncVideo()));
+  prefersReducedMotion.addEventListener('change', syncVideo);
+  wideHero.addEventListener('change', () => {
+    heroSection.classList.remove('is-playing');
+    syncVideo();
+  });
+  syncVideo();
+}
 
-const resetHeroPointer = () => {
-  hero.style.setProperty('--pointer-x', '0px');
-  hero.style.setProperty('--pointer-y', '0px');
-  hero.style.setProperty('--pointer-x-soft', '0px');
-  hero.style.setProperty('--pointer-y-soft', '0px');
-};
-const setupHeroPointer = () => {
-  hero.onpointermove = null;
-  hero.onpointerleave = null;
-  resetHeroPointer();
-  if (!finePointer.matches || prefersReducedMotion.matches) return;
-  hero.onpointermove = (event) => {
-    const x = event.clientX / window.innerWidth - .5;
-    const y = event.clientY / window.innerHeight - .5;
-    hero.style.setProperty('--pointer-x', `${x * 18}px`);
-    hero.style.setProperty('--pointer-y', `${y * 14}px`);
-    hero.style.setProperty('--pointer-x-soft', `${x * -10}px`);
-    hero.style.setProperty('--pointer-y-soft', `${y * -8}px`);
-  };
-  hero.onpointerleave = resetHeroPointer;
-};
-setupHeroPointer();
-finePointer.addEventListener('change', setupHeroPointer);
-prefersReducedMotion.addEventListener('change', setupHeroPointer);
-
+/* ---------- Photo lightbox ---------- */
 const galleryImages = [
-  { src: 'assets/media/ivy-packed-crowd-1152.jpg', alt: 'Packed dance floor at Ivy Nightclub under magenta and blue lighting', caption: 'Room response · Ivy Nightclub, Morgantown' },
-  { src: 'assets/media/ivy-vato-led-1536.jpg', alt: 'VATO mixing live beside a large VATO venue LED display', caption: 'Behind the decks · VATO venue identity' },
-  { src: 'assets/media/ivy-booth-crowd-1170.jpg', alt: 'VATO performing from the booth toward a packed Ivy Nightclub dance floor', caption: 'Nightlife · In the room at Ivy Nightclub' },
-  { src: 'assets/media/ivy-side-performance-1152.jpg', alt: 'VATO working the controls during a live Ivy Nightclub set', caption: 'Behind the decks · Live mixing' },
-  { src: 'assets/media/ivy-crowd-decks-1242.jpg', alt: 'Packed Ivy Nightclub crowd seen over illuminated decks', caption: 'Room response · Peak-hour energy' },
-  { src: 'assets/media/joe-mamas-live-837.jpg', alt: "VATO performing beneath the Joe Mama's venue logo", caption: "Residency · Joe Mama's" },
-  { src: 'assets/media/ivy-vato-wall-828.jpg', alt: 'VATO performing in front of a venue LED wall carrying the VATO mark', caption: 'Live identity · VATO in the venue' },
-  { src: 'assets/media/production-controller-1536.jpg', alt: 'Professional DJ controller, decks, and mixer prepared for an event', caption: 'Production · Professional controls and preparation' },
-  { src: 'assets/media/mebane-room-1152.jpg', alt: 'Professional VATO sound and DJ setup in the Mebane wedding reception room', caption: 'Wedding proof · Mebane, North Carolina · June 20, 2026' },
-  { src: 'assets/media/mebane-booth-1152.jpg', alt: "Mebane wedding reception viewed from VATO's professional DJ booth", caption: 'Wedding proof · Reception room and booth perspective' }
+  { src: 'assets/media/ivy-booth-crowd-1170.jpg', alt: 'VATO performing from the booth toward a packed Ivy Nightclub dance floor', caption: 'In the room · Ivy Nightclub, Morgantown' },
+  { src: 'assets/media/ivy-side-performance-1152.jpg', alt: 'VATO working the controls during a live Ivy Nightclub set', caption: 'Live mixing · Ivy Nightclub' },
+  { src: 'assets/media/ivy-vato-wall-828.jpg', alt: 'VATO performing in front of a venue LED wall carrying the VATO mark', caption: 'VATO on the wall' },
+  { src: 'assets/media/production-controller-1536.jpg', alt: 'DJ controller, decks, and mixer set up for an event', caption: 'Prepared to perform' },
+  { src: 'assets/media/ivy-live-mixing-clean-1024.jpg', alt: 'Vince Widerman mixing live at Ivy Nightclub', caption: 'Behind the decks' },
+  { src: 'assets/media/ivy-vato-led-1536.jpg', alt: 'VATO mixing live beside a large VATO venue LED display', caption: 'Live identity · VATO in the venue' },
+  { src: 'assets/media/mebane-room-1152.jpg', alt: 'VATO sound and DJ setup in the Mebane wedding reception room', caption: 'Wedding · Mebane, North Carolina · June 20, 2026' },
+  { src: 'assets/media/mebane-booth-1152.jpg', alt: "Mebane wedding reception viewed from VATO's DJ booth", caption: 'Wedding · Reception room from the booth' }
 ];
 
 const lightbox = document.querySelector('.lightbox');
@@ -261,34 +246,16 @@ lightbox.addEventListener('keydown', (event) => {
   if (event.key === 'ArrowRight') renderLightbox(currentGalleryIndex + 1);
 });
 
-const escapeText = (value) => String(value ?? '')
-  .replaceAll('&', '&amp;')
-  .replaceAll('<', '&lt;')
-  .replaceAll('>', '&gt;')
-  .replaceAll('"', '&quot;')
-  .replaceAll("'", '&#039;');
+/* Arrow keys also scroll the photo rail when it has focus. */
+const photoRail = document.querySelector('.photo-rail');
+photoRail?.addEventListener('keydown', (event) => {
+  if (event.target !== photoRail) return;
+  const step = photoRail.clientWidth * 0.8;
+  if (event.key === 'ArrowRight') { photoRail.scrollBy({ left: step, behavior: prefersReducedMotion.matches ? 'auto' : 'smooth' }); event.preventDefault(); }
+  if (event.key === 'ArrowLeft') { photoRail.scrollBy({ left: -step, behavior: prefersReducedMotion.matches ? 'auto' : 'smooth' }); event.preventDefault(); }
+});
 
-const reviewCards = document.querySelector('#review-cards');
-const reviewFallback = document.querySelector('#reviews-fallback');
-fetch('reviews.json')
-  .then((response) => {
-    if (!response.ok) throw new Error('Review request failed');
-    return response.json();
-  })
-  .then((reviews) => {
-    if (!Array.isArray(reviews) || !reviews.length) throw new Error('No reviews available');
-    reviewCards.innerHTML = reviews.slice(0, 3).map((review) => {
-      const rating = Math.max(0, Math.min(5, Number(review.rating) || 0));
-      const details = [review.event_type, review.source, review.date].filter(Boolean).map(escapeText).join(' · ');
-      return `<article class="review-card">
-        <div class="review-stars" aria-label="${rating} out of 5 stars">${'★'.repeat(rating)}${'☆'.repeat(5 - rating)}</div>
-        <blockquote>${escapeText(review.excerpt)}</blockquote>
-        <footer><b>${escapeText(review.name)}</b><span>${details}</span></footer>
-      </article>`;
-    }).join('');
-  })
-  .catch(() => { reviewFallback.hidden = false; });
-
+/* ---------- Booking form (posts to the same Formspree endpoint as before) ---------- */
 const form = document.querySelector('#booking-form');
 const formNotice = document.querySelector('#form-success');
 const requiredFields = [...form.querySelectorAll('[required]')];

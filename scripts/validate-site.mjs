@@ -1,5 +1,13 @@
 import { readFileSync, statSync } from 'node:fs';
 
+// An MP4 carries a sound track only if one of its 'hdlr' boxes has handler type 'soun'.
+const hasSoundTrack = (buffer) => {
+  for (let index = buffer.indexOf('hdlr'); index !== -1; index = buffer.indexOf('hdlr', index + 4)) {
+    if (buffer.toString('latin1', index + 12, index + 16) === 'soun') return true;
+  }
+  return false;
+};
+
 const html = readFileSync('index.html', 'utf8');
 const css = readFileSync('styles.css', 'utf8');
 const script = readFileSync('script.js', 'utf8');
@@ -7,17 +15,18 @@ const reviews = JSON.parse(readFileSync('reviews.json', 'utf8'));
 const manifest = JSON.parse(readFileSync('site.webmanifest', 'utf8'));
 const requiredFiles = [
   'index.html', 'styles.css', 'script.js', 'reviews.json', 'robots.txt', 'sitemap.xml',
-  'site.webmanifest', 'CNAME', 'logo.png', 'assets/vato-share-card.png',
+  'site.webmanifest', 'CNAME', 'logo.png', 'assets/vato-share-card.png', 'assets/media/vato-wordmark-480.png',
+  'assets/media/hero-vato-tall.mp4', 'assets/media/hero-vato-tall.jpg',
+  'assets/media/hero-vato-desktop.mp4', 'assets/media/hero-vato-desktop.jpg',
   'assets/media/hero-ivy-live-960.jpg', 'assets/media/hero-ivy-live-1560.jpg',
   'assets/media/ivy-packed-crowd-640.jpg', 'assets/media/ivy-packed-crowd-1152.jpg',
   'assets/media/ivy-vato-led-640.jpg', 'assets/media/ivy-vato-led-1536.jpg',
-  'assets/media/ivy-live-mixing-640.jpg', 'assets/media/ivy-live-mixing-1152.jpg',
+  'assets/media/ivy-live-mixing-clean-640.jpg', 'assets/media/ivy-live-mixing-clean-1024.jpg',
   'assets/media/ivy-booth-crowd-640.jpg', 'assets/media/ivy-booth-crowd-1170.jpg',
   'assets/media/ivy-side-performance-640.jpg', 'assets/media/ivy-side-performance-1152.jpg',
   'assets/media/ivy-crowd-decks-640.jpg', 'assets/media/ivy-crowd-decks-1242.jpg',
   'assets/media/joe-mamas-live-640.jpg', 'assets/media/joe-mamas-live-837.jpg',
   'assets/media/ivy-vato-wall-640.jpg', 'assets/media/ivy-vato-wall-828.jpg',
-  'assets/media/production-controller-640.jpg', 'assets/media/production-controller-1536.jpg',
   'assets/media/mebane-room-640.jpg', 'assets/media/mebane-room-1152.jpg',
   'assets/media/mebane-booth-640.jpg', 'assets/media/mebane-booth-1152.jpg'
 ];
@@ -25,6 +34,16 @@ const requiredFiles = [
 const failures = [];
 for (const path of requiredFiles) {
   try { statSync(path); } catch { failures.push(`Missing required file: ${path}`); }
+}
+
+const videoTags = [...html.matchAll(/<video\b[^>]*>/g)].map(([tag]) => tag);
+const videoFiles = [...new Set([...html.matchAll(/data-src(?:-tall|-wide)?="([^"]+\.mp4)"/g)].map(([, path]) => path))];
+for (const path of videoFiles) {
+  try {
+    const buffer = readFileSync(path);
+    if (buffer.length > 2.6 * 1024 * 1024) failures.push(`${path} is ${(buffer.length / 1048576).toFixed(2)} MB; keep clips at or under about 2.5 MB.`);
+    if (hasSoundTrack(buffer)) failures.push(`${path} has an audio track; clips must be silent files.`);
+  } catch { failures.push(`Missing clip: ${path}`); }
 }
 
 const scheduleEvents = [...html.matchAll(/<article class="date-row" data-schedule-event data-event-date="([^"]+)">([\s\S]*?)<\/article>/g)]
@@ -57,7 +76,12 @@ const checks = [
   [script.includes('dates_schedule_toggle') && script.includes("setAttribute('aria-expanded'"), 'Schedule toggle analytics or accessibility state handling is missing.'],
   [script.includes('event.dataset.eventDate < todayKey') && script.includes('event.dataset.eventDate === todayKey') && script.includes('index >= 3'), 'Expired, Tonight, or recent-date limiting logic is missing.'],
   [!html.includes('mix-manifesto') && !html.includes('04 / Live mixing') && !script.includes('mixSection'), 'The replaced live-mixing scene must not remain.'],
-  [html.includes('assets/media/hero-ivy-live-1560.jpg'), 'Curated nightlife hero is missing.'],
+  [html.includes('data-hero-video') && html.includes('assets/media/hero-vato-tall.jpg'), 'The hero clip of Vince and its poster are missing.'],
+  [videoTags.length >= 1 && videoTags.length <= 2, `Use one or two clips on the page, not ${videoTags.length}.`],
+  [videoTags.every((tag) => / muted\b/.test(tag) && / playsinline\b/.test(tag) && !/ controls\b| autoplay\b/.test(tag)), 'Every clip must be muted, inline, with no controls or autoplay attribute.'],
+  [!/<audio\b|<iframe\b/i.test(html), 'No audio players or embeds: the site carries no music.'],
+  [!/\bAI\b/.test(html.replace(/<script[\s\S]*?<\/script>/g, '').replace(/<[^>]+>/g, ' ')), 'The word AI must not appear on the page.'],
+  [html.includes('https://www.tiktok.com/@vato.official'), 'TikTok link is missing.'],
   [html.includes('assets/media/mebane-room-1152.jpg') && html.includes('assets/media/mebane-booth-1152.jpg'), 'Mebane wedding proof media is incomplete.'],
   [!html.includes('media-input/'), 'Source media must never be referenced by the public page.'],
   [!html.includes('YOUR_FORM_ID') && !html.includes('EDIT_your'), 'Unresolved production placeholders remain.'],
@@ -84,4 +108,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log(`Validated ${requiredFiles.length} required files, ${ids.length} unique IDs, ${localReferences.length} local references, and ${reviews.length} reviews.`);
+console.log(`Validated ${requiredFiles.length} required files, ${ids.length} unique IDs, ${localReferences.length} local references, ${videoFiles.length} silent clips, and ${reviews.length} reviews.`);
