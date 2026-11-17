@@ -13,7 +13,7 @@ const expectedDates = [
   '2026-08-22', '2026-08-28', '2026-08-29', '2026-09-06', '2026-09-18',
   '2026-10-01', '2026-10-02', '2026-10-03', '2026-10-10', '2026-10-17', '2026-10-22', '2026-10-23',
   '2026-10-28', '2026-10-30', '2026-10-31', '2026-11-05', '2026-11-06', '2026-11-07', '2026-11-08',
-  '2026-11-12', '2026-11-14', '2026-11-15', '2026-11-21', '2026-12-10'
+  '2026-11-12', '2026-11-14', '2026-11-15', '2026-11-21', '2026-12-10', '2026-12-31'
 ];
 const videoTags = [...html.matchAll(/<video\b[^>]*>/g)].map(([tag]) => tag);
 const videoFiles = [...html.matchAll(/data-src(?:-tall|-wide)?="([^"]+\.mp4)"/g)].map(([, path]) => path);
@@ -57,7 +57,7 @@ test('provides mobile, reduced-motion, and keyboard gallery behavior', () => {
 test('publishes exactly the verified public dates in chronological order', () => {
   assert.equal(scheduleEvents.length, expectedDates.length);
   assert.deepEqual(scheduleEvents.map(({ date }) => date), expectedDates);
-  assert.equal((scheduleMarkup.match(/Ivy Nightclub/g) || []).length, 10);
+  assert.equal((scheduleMarkup.match(/Ivy Nightclub/g) || []).length, 11);
   assert.equal((scheduleMarkup.match(/Joe Mama's/g) || []).length, 10);
   assert.equal((scheduleMarkup.match(/WVU Volleyball/g) || []).length, 2);
   assert.equal((scheduleMarkup.match(/123 Pleasant Street|Yellow Banana/g) || []).length, 2);
