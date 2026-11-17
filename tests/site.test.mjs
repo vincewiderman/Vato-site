@@ -143,7 +143,7 @@ test('routes booking through the existing inquiry form without publishing an una
 test('retains production analytics, media, and public trust routes', () => {
   assert.match(html, /G-1SQVER0811/);
   assert.match(html, /https:\/\/g\.page\/r\/CR0kMmEMyEyyEBM\/review/);
-  assert.match(html, /https:\/\/instagram\.com\/vince_w29/);
+  assert.match(html, /https:\/\/instagram\.com\/vince\.w_/);
   assert.match(html, /https:\/\/www\.tiktok\.com\/@vato\.official/);
   assert.match(html, /sms:\+13362794506/);
 });

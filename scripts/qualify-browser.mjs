@@ -447,7 +447,7 @@ const productionIdentityValid =
   productionIdentity.prices.some((price) => price.includes('Full Wedding') && price.includes('$1,500')) &&
   productionIdentity.prices.some((price) => price.includes('Large-Scale / Production-Heavy') && price.includes('Custom')) &&
   productionIdentity.sms === 'sms:+13362794506' &&
-  productionIdentity.instagram === 'https://instagram.com/vince_w29';
+  productionIdentity.instagram === 'https://instagram.com/vince.w_';
 if (!productionIdentityValid) {
   throw new Error(`Production identity qualification failed: ${JSON.stringify(productionIdentity)}`);
 }
