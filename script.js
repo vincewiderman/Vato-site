@@ -152,19 +152,45 @@ const motionToggle = document.querySelector('[data-motion-toggle]');
 const motionLabel = document.querySelector('[data-motion-label]');
 let userPaused = false;
 let heroVisible = true;
+/* iPhones in Low Power Mode (and some browsers) refuse to start a video on their own. Then the button shows
+   "play", and the clip starts on the visitor's first tap anywhere on the page (a tap is allowed to start it). */
+let autoplayBlocked = false;
 
 const tryPlay = (video) => {
   video.muted = true;
   const attempt = video.play();
-  if (attempt && typeof attempt.catch === 'function') attempt.catch(() => {});
+  if (attempt && typeof attempt.catch === 'function') {
+    attempt.catch((error) => {
+      if (!error || error.name !== 'NotAllowedError') return;
+      autoplayBlocked = true;
+      syncToggle();
+      armFirstTap();
+    });
+  }
 };
 
 const syncToggle = () => {
   if (!motionToggle) return;
+  const showsPaused = userPaused || autoplayBlocked;
   motionToggle.hidden = !motionAllowed();
-  motionToggle.setAttribute('aria-pressed', String(userPaused));
-  motionToggle.classList.toggle('is-paused', userPaused);
-  motionLabel.textContent = userPaused ? 'Play background video' : 'Pause background video';
+  motionToggle.setAttribute('aria-pressed', String(showsPaused));
+  motionToggle.classList.toggle('is-paused', showsPaused);
+  motionLabel.textContent = showsPaused ? 'Play background video' : 'Pause background video';
+};
+
+let firstTapArmed = false;
+const armFirstTap = () => {
+  if (firstTapArmed) return;
+  firstTapArmed = true;
+  const onFirstTap = (event) => {
+    if (motionToggle && motionToggle.contains(event.target)) return; // the button handles its own tap
+    document.removeEventListener('touchend', onFirstTap, true);
+    document.removeEventListener('click', onFirstTap, true);
+    firstTapArmed = false;
+    if (autoplayBlocked && !userPaused && heroVisible && motionAllowed()) tryPlay(heroVideo);
+  };
+  document.addEventListener('touchend', onFirstTap, { capture: true, passive: true });
+  document.addEventListener('click', onFirstTap, { capture: true, passive: true });
 };
 
 const syncVideo = () => {
@@ -184,7 +210,13 @@ const syncVideo = () => {
 };
 
 if (heroVideo) {
-  heroVideo.addEventListener('playing', () => heroSection.classList.add('is-playing'));
+  heroVideo.addEventListener('playing', () => {
+    heroSection.classList.add('is-playing');
+    if (autoplayBlocked) {
+      autoplayBlocked = false;
+      syncToggle();
+    }
+  });
   if ('IntersectionObserver' in window) {
     new IntersectionObserver(([entry]) => {
       heroVisible = entry.isIntersecting;
@@ -192,7 +224,8 @@ if (heroVideo) {
     }).observe(heroSection);
   }
   motionToggle?.addEventListener('click', () => {
-    userPaused = !userPaused;
+    if (autoplayBlocked) userPaused = false; // the phone blocked it: this tap starts it
+    else userPaused = !userPaused;
     syncVideo();
     track('background_video_toggle', { paused: userPaused });
   });
