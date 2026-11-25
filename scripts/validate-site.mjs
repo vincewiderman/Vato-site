@@ -52,9 +52,9 @@ const expectedDates = [
   '2026-08-22', '2026-08-28', '2026-08-29', '2026-09-06', '2026-09-18',
   '2026-10-01', '2026-10-02', '2026-10-03', '2026-10-10', '2026-10-17', '2026-10-22', '2026-10-23',
   '2026-10-28', '2026-10-30', '2026-10-31', '2026-11-05', '2026-11-06', '2026-11-07', '2026-11-08',
-  '2026-11-12', '2026-11-14', '2026-11-15', '2026-11-21', '2026-12-10', '2026-12-31'
+  '2026-11-12', '2026-11-14', '2026-11-15', '2026-11-21', '2026-11-30', '2026-12-10', '2026-12-31'
 ];
-const publicVenues = ['Ivy Nightclub', "Joe Mama's", '123 Pleasant Street', 'Yellow Banana', 'WVU Volleyball'];
+const publicVenues = ['Ivy Nightclub', "Joe Mama's", '123 Pleasant Street', 'Yellow Banana', 'WVU Volleyball', 'WVU Women&rsquo;s Basketball'];
 const scheduleMarkup = scheduleEvents.map(({ markup }) => markup).join('\n');
 const scheduleVenues = scheduleEvents.map(({ markup }) => markup.match(/<h3>([^<]+)<\/h3>/)?.[1]);
 

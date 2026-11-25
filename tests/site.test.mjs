@@ -13,7 +13,7 @@ const expectedDates = [
   '2026-08-22', '2026-08-28', '2026-08-29', '2026-09-06', '2026-09-18',
   '2026-10-01', '2026-10-02', '2026-10-03', '2026-10-10', '2026-10-17', '2026-10-22', '2026-10-23',
   '2026-10-28', '2026-10-30', '2026-10-31', '2026-11-05', '2026-11-06', '2026-11-07', '2026-11-08',
-  '2026-11-12', '2026-11-14', '2026-11-15', '2026-11-21', '2026-12-10', '2026-12-31'
+  '2026-11-12', '2026-11-14', '2026-11-15', '2026-11-21', '2026-11-30', '2026-12-10', '2026-12-31'
 ];
 const videoTags = [...html.matchAll(/<video\b[^>]*>/g)].map(([tag]) => tag);
 const videoFiles = [...html.matchAll(/data-src(?:-tall|-wide)?="([^"]+\.mp4)"/g)].map(([, path]) => path);
@@ -60,11 +60,12 @@ test('publishes exactly the verified public dates in chronological order', () =>
   assert.equal((scheduleMarkup.match(/Ivy Nightclub/g) || []).length, 11);
   assert.equal((scheduleMarkup.match(/Joe Mama's/g) || []).length, 10);
   assert.equal((scheduleMarkup.match(/WVU Volleyball/g) || []).length, 2);
+  assert.equal((scheduleMarkup.match(/WVU Women&rsquo;s Basketball/g) || []).length, 1);
   assert.equal((scheduleMarkup.match(/123 Pleasant Street|Yellow Banana/g) || []).length, 2);
   assert.doesNotMatch(scheduleMarkup, /Dick(?:'|&rsquo;)s Sporting Goods/i);
   assert.doesNotMatch(scheduleMarkup, /private/i);
   const timed = scheduleEvents.filter(({ markup }) => /\b(?:[01]?\d|2[0-3]):[0-5]\d\b|\b(?:a\.?m\.?|p\.?m\.?)\b/i.test(markup));
-  assert.deepEqual(timed.map(({ date }) => date), ['2026-11-07', '2026-11-08', '2026-11-14', '2026-11-15', '2026-11-21']);   // only the times Vince gave (11-06) + Ivy 9 PM he gave and the WVU official 12:30 PM (11-11)
+  assert.deepEqual(timed.map(({ date }) => date), ['2026-11-07', '2026-11-08', '2026-11-14', '2026-11-15', '2026-11-21', '2026-11-30']);   // only the times Vince gave (11-06) + Ivy 9 PM he gave and the WVU official 12:30 PM (11-11) and 7 PM (11-24)
 });
 
 test('progressively enhances the schedule without hiding dates from source HTML', () => {
